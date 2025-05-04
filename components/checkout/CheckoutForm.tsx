@@ -43,9 +43,9 @@ const CheckoutForm: React.FC = () => {
         amount: data.data.total_price * 100 * 0.6, // Convert to base currency unit, convert to AUD,
         currency_code: "USD",
         order_id: data.data.id,
-        success_url: `https://unclev.com.au/checkout/order-success?status=success&orderId=${data.data.id}`,
-        cancel_url: `https://unclev.com.au/checkout/order-success?status=canceled&orderId=${data.data.id}`,
-        failure_url: `https://unclev.com.au/checkout/order-success?status=failed&orderId=${data.data.id}`,
+        success_url: `https://javcorp.com.au/checkout/order-success?status=success&orderId=${data.data.id}`,
+        cancel_url: `https://javcorp.com.au/checkout/order-success?status=canceled&orderId=${data.data.id}`,
+        failure_url: `https://javcorp.com.au/checkout/order-success?status=failed&orderId=${data.data.id}`,
       };
 
       createPaymentMutation(paymentData);
