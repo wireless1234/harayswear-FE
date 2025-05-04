@@ -29,8 +29,8 @@ const SignUpForm = () => {
 
   return (
     <div className="flex items-center justify-center md:min-h-screen w-full md:w-7/12 px-4 sm:px-6 lg:px-8">
-      <div className="w-full md:w-2/3 mx-auto text-white">
-        <h1 className="text-4xl sm:text-5xl font-bold text-white text-center mb-6">Sign Up</h1>
+      <div className="w-full md:w-2/3 mx-auto text-black">
+        <h1 className="text-4xl sm:text-5xl font-bold text-black text-center mb-6">Sign Up</h1>
         <p className="text-center text-sm sm:text-base">Already have an account? <Link href="/login" className="text-blue-500">Log In</Link></p>
         <Formik
           initialValues={{
@@ -105,11 +105,11 @@ const SignUpForm = () => {
             <Form className="space-y-8 mt-8">
               {/* Full Name */}
               <div>
-                <label className="text-white block mb-1">Full Name</label>
+                <label className="text-black block mb-1">Full Name</label>
                 <Field
                   type="text"
                   name="fullName"
-                  className="w-full p-3 rounded-md border border-[#DBDDE3] text-white focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
+                  className="w-full p-3 rounded-md border border-[#DBDDE3] text-black focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
                   placeholder="Enter your full name"
                 />
                 <ErrorMessage name="fullName" component="div" className="text-red-400 text-sm mt-1" />
@@ -117,11 +117,11 @@ const SignUpForm = () => {
 
               {/* Email */}
               <div>
-                <label className="text-white block mb-1">Email</label>
+                <label className="text-black block mb-1">Email</label>
                 <Field
                   type="email"
                   name="email"
-                  className="w-full p-3 rounded-md border border-[#DBDDE3] text-white focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
+                  className="w-full p-3 rounded-md border border-[#DBDDE3] text-black focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
                   placeholder="Enter your email"
                 />
                 <ErrorMessage name="email" component="div" className="text-red-400 text-sm mt-1" />
@@ -131,22 +131,22 @@ const SignUpForm = () => {
               <div className="flex space-x-4">
                 {/* Date of Birth */}
                 <div className="w-1/2">
-                  <label className="text-white block mb-1">Date of Birth</label>
+                  <label className="text-black block mb-1">Date of Birth</label>
                   <Field
                     type="date"
                     name="dateOfBirth"
-                    className="w-full p-3 rounded-md border border-[#DBDDE3] text-white focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
+                    className="w-full p-3 rounded-md border border-[#DBDDE3] text-black focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
                   />
                   <ErrorMessage name="dateOfBirth" component="div" className="text-red-400 text-sm mt-1" />
                 </div>
 
                 {/* Phone Number */}
                 <div className="w-1/2">
-                  <label className="text-white block mb-1">Phone Number</label>
+                  <label className="text-black block mb-1">Phone Number</label>
                   <Field
                     type="text"
                     name="phoneNumber"
-                    className="w-full p-3 rounded-md border border-[#DBDDE3] text-white focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
+                    className="w-full p-3 rounded-md border border-[#DBDDE3] text-black focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
                     placeholder="Enter your phone number"
                   />
                   <ErrorMessage name="phoneNumber" component="div" className="text-red-400 text-sm mt-1" />
@@ -155,11 +155,11 @@ const SignUpForm = () => {
               
               {/* Address */}
               <div>
-                <label className="text-white block mb-1">Address</label>
+                <label className="text-black block mb-1">Address</label>
                 <Field
                   type="text"
                   name="address"
-                  className="w-full p-3 rounded-md border border-[#DBDDE3] text-white focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
+                  className="w-full p-3 rounded-md border border-[#DBDDE3] text-black focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
                   placeholder="Enter your address"
                 />
                 <ErrorMessage name="address" component="div" className="text-red-400 text-sm mt-1" />
@@ -167,11 +167,11 @@ const SignUpForm = () => {
 
               {/* Password */}
               <div className="relative">
-                <label className="text-white block mb-1">Password</label>
+                <label className="text-black block mb-1">Password</label>
                 <Field
                   type={showPassword ? "text" : "password"}
                   name="password"
-                  className="w-full p-3 rounded-md border border-[#DBDDE3] text-white focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
+                  className="w-full p-3 rounded-md border border-[#DBDDE3] text-black focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
                   placeholder="Enter your password"
                 />
                     <span
@@ -185,11 +185,11 @@ const SignUpForm = () => {
 
               {/* Confirm Password */}
               <div className="relative">
-                <label className="text-white block mb-1">Confirm Password</label>
+                <label className="text-black block mb-1">Confirm Password</label>
                 <Field
                   type={showConfirmPassword ? "text" : "password"}
                   name="confirmPassword"
-                  className="w-full p-3 rounded-md border border-[#DBDDE3] text-white focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
+                  className="w-full p-3 rounded-md border border-[#DBDDE3] text-black focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
                   placeholder="Confirm your password"
                 />
                     <span
@@ -204,7 +204,7 @@ const SignUpForm = () => {
               {/* Accept Terms */}
               <div className="flex items-center">
                 <Field type="checkbox" name="acceptTerms" className="mr-2" />
-                <label className="text-white">I hereby accept the terms and conditions of Javcorp</label>
+                <label className="text-black">I hereby accept the terms and conditions of Javcorp</label>
                 <ErrorMessage name="acceptTerms" component="div" className="text-red-400 text-sm ml-2" />
               </div>
 

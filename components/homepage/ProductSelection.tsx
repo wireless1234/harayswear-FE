@@ -5,9 +5,9 @@ import ProductSelectionCard from "@/components/layout/ProductSelectionCard";
 import { useQuery } from '@tanstack/react-query';
 import { getAllProducts } from "@/services/productService";
 
-const ProductSelection = ({ brandid, onAddToCartSuccess }: { brandid: number; onAddToCartSuccess?: () => void }) => {
-  const queryKey = ['products', brandid];
-  const queryFn = () => getAllProducts(undefined, brandid);
+const ProductSelection = ({ categoryid, onAddToCartSuccess }: { categoryid: number; onAddToCartSuccess?: () => void }) => {
+  const queryKey = ['products', categoryid];
+  const queryFn = () => getAllProducts(categoryid, undefined);
   const { data: products, isLoading, error } = useQuery({ queryKey, queryFn });
 
   if (error) return <div className="text-red-500">Error loading products</div>;

@@ -162,7 +162,7 @@ const CheckoutForm: React.FC = () => {
   return (
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
       {() => (
-        <Form className="w-full p-8 rounded-lg text-white">
+        <Form className="w-full p-8 rounded-lg text-black">
           {/* Contact Details */}
           {!isLoggedIn && (
             <>
