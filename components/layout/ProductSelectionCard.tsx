@@ -35,6 +35,7 @@ const ProductSelectionCard = ({ products, isLoading, onAddToCartSuccess }: Props
     if (products && products.length > 0) {
       setQuantities(products.reduce((acc, product) => ({ ...acc, [product.id]: 0 }), {}));
     }
+    console.log("Products updated:", products);
   }, [products]);
 
   const [isAddingToCart, setIsAddingToCart] = useState(false);
@@ -77,7 +78,7 @@ const ProductSelectionCard = ({ products, isLoading, onAddToCartSuccess }: Props
   const grandTotal = total + tax;
 
   return (
-    <div className="border border-[#F5EE62] bg-black text-white text-lg md:text-xl p-4 md:p-8 rounded-[2rem] md:rounded-[4rem] shadow-md w-11/12 md:w-8/12 mx-auto font-semibold">
+    <div className="border border-[#F5EE62] bg-white text-black text-lg md:text-xl p-4 md:p-8 rounded-[2rem] md:rounded-[4rem] shadow-md w-11/12 md:w-8/12 mx-auto font-semibold">
       <div className="hidden md:flex items-center justify-around">
         <span className="font-semibold text-sm md:text-base">Flavor</span>
         <span className="font-semibold text-sm md:text-base">Unit Price</span>

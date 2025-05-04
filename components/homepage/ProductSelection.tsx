@@ -13,7 +13,7 @@ const ProductSelection = ({ brandid, onAddToCartSuccess }: { brandid: number; on
   if (error) return <div className="text-red-500">Error loading products</div>;
 
   return (
-    <div className="w-full">
+    <div className="w-full absolute translate-x-1/2 right-1/2 z-30 ">
       <ProductSelectionCard
         isLoading={isLoading}
         products={products || []}

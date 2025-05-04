@@ -33,11 +33,11 @@ const Newsletter = () => {
     <div className='bg-[url("/images/newsletter-bg.png")] md:h-screen overflow-x-hidden bg-no-repeat bg-center px-6 py-20 md:p-24 bg-cover'>
       <div className='max-w-[1440px] flex h-full flex-col mx-auto'>
         <h2 style={{  fontFamily: 'Neutro Outline, sans-serif', fontStyle: 'normal'}} 
-          className="text-3xl md:text-5xl lg:text-7xl xl:text-8xl 2xl:text-[117.69px] font-bold uppercase text-white text-center">
+          className="text-3xl md:text-5xl lg:text-7xl xl:text-8xl 2xl:text-[117.69px] font-bold uppercase text-black text-center">
             Newsletter
 
         </h2>
-        <p className='text-center mt-4 text-white font-semibold text-sm md:text-[19px] font-sans'>Delivery under 2 hours...</p>
+        <p className='text-center mt-4 text-black font-semibold text-sm md:text-[19px] font-sans'>Delivery under 2 hours...</p>
         <div className="flex-grow hidden md:block"></div>
         <div className="flex items-center mx-auto py-1 md:p-4 rounded-full md:flex-1 w-full max-w-3xl mt-2.5 md:mt-0">
           <input

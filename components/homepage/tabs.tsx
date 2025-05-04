@@ -42,7 +42,7 @@ const TabNavigation = ({activeTab, setActiveTab}: TabNavigationProps) => {
   return (
     <div 
       ref={scrollContainerRef}
-      className="hide-scrollbar mx-auto flex bg-white rounded-full p-1 md:p-1.5 border border-gray-300 max-w-[1145px] overflow-x-auto cursor-grab active:cursor-grabbing"
+      className="hide-scrollbar mx-auto flex bg-white rounded-full p-1 md:p-1.5 border border-gray-300 max-w-fit overflow-x-auto cursor-grab active:cursor-grabbing"
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseLeave}

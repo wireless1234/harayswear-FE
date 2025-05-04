@@ -18,8 +18,8 @@ const encodeSans = Encode_Sans({
 // });
 
 export const metadata: Metadata = {
-  title: "Uncle V",
-  description: "UncleV Ecommerce",
+  title: "Javcorp",
+  description: "Javcorp Ecommerce",
 };
 
 export default function RootLayout({

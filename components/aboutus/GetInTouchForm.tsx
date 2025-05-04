@@ -17,7 +17,7 @@ const GetInTouchForm = () => {
             <form onSubmit={handleSubmit} className="w-full max-w-lg mx-auto text-white px-4">
                 <div className='flex flex-col md:flex-row items-center justify-between mb-4 w-full space-y-4 md:space-y-0 md:space-x-4'>
                     <div className="w-full md:w-1/2">
-                        <label htmlFor="name" className="block mb-1 text-sm font-medium text-white">Your Name</label>
+                        <label htmlFor="name" className="block mb-1 text-sm font-medium text-black">Your Name</label>
                         <input
                         id="name"
                         type="text"
@@ -28,7 +28,7 @@ const GetInTouchForm = () => {
                         />
                     </div>
                     <div className="w-full md:w-1/2">
-                        <label htmlFor="email" className="block mb-1 text-sm font-medium text-white">Your Email Address</label>
+                        <label htmlFor="email" className="block mb-1 text-sm font-medium text-black">Your Email Address</label>
                         <input
                         id="email"
                         type="email"
@@ -40,7 +40,7 @@ const GetInTouchForm = () => {
                     </div>
                 </div>
                 <div>
-                    <label htmlFor="message" className="block mb-1 text-sm font-medium text-white">Message</label>
+                    <label htmlFor="message" className="block mb-1 text-sm font-medium text-black">Message</label>
                     <textarea
                     id="message"
                     name="message"
