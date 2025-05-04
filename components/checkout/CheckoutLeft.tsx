@@ -20,7 +20,7 @@ const CheckoutLeft = () => {
       { !user && !isLoadingUser && (
         <>
           <div className="flex flex-col items-center py-8 pl-4 pr-8 relative w-full">
-            <h2 className="text-xl text-white font-semibold">Already Have An Account?</h2>
+            <h2 className="text-xl text-black font-semibold">Already Have An Account?</h2>
             <button
               onClick={handleLogin}
               className="text-white bg-[var(--color-purple)] text-xl font-semibold py-2 px-4 mt-4 rounded-lg cursor-pointer"

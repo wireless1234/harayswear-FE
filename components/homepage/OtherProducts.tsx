@@ -8,7 +8,6 @@ import { toast } from 'react-toastify';
 import { tabs, Product } from "@/lib/productCategoryData";
 import { ProductSkeleton } from '@/lib/skeletonLoader';
 import { useCart } from '@/hooks/useCart';
-import { otherProductData } from '@/lib/otherProductData';
 
 const OtherProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -37,107 +36,67 @@ const OtherProducts = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const fetchProducts = async (append: boolean = false) => {
-  //     try {
-  //       setLoading(true);
-  //       // Reset products when tab changes
-  //       if (page === 1) {
-  //         setProducts([]);
-  //       }
-
-  //       const res = await fetch(
-  //         `${process.env.NEXT_PUBLIC_API_URL}/products/products/?page=${page}&page_size=3&brand=${activeTab}`
-  //       );
-
-  //       if (!res.ok) {
-  //         let errorMessage = '';
-        
-  //         switch (res.status) {
-  //           case 400:
-  //             errorMessage = 'Bad Request - The server could not understand the request.';
-  //             break;
-  //           case 401:
-  //             errorMessage = 'Unauthorized - Please log in to access this resource.';
-  //             break;
-  //           case 403:
-  //             errorMessage = 'Forbidden - You do not have permission to access this.';
-  //             break;
-  //           case 404:
-  //             errorMessage = 'Not Found - The requested resource could not be found.';
-  //             break;
-  //           case 500:
-  //             errorMessage = 'Internal Server Error - Something went wrong on the server.';
-  //             break;
-  //           case 503:
-  //             errorMessage = 'Service Unavailable - The server is temporarily unavailable.';
-  //             break;
-  //           default:
-  //             errorMessage = `Unexpected error! Status: ${res.status}`;
-  //         }
-        
-  //         throw new Error(errorMessage);
-  //       }
-        
-
-  //       const data = await res.json();
-
-  //       if (data.data.results.length < 3) {
-  //         setHasMore(false); // No more products
-  //       }
-
-  //       // Check if data is valid and then append products
-  //       if (data?.data?.results && data.data.results.length > 0) {
-  //         setProducts(prev => append ? [...prev, ...data.data.results] : data.data.results);
-  //       }
-      
-  //       if (append) {
-  //         setLoading(true);
-  //       } else {
-  //         setLoading(false);
-  //       }
-        
-
-  //     } catch (err: unknown) {
-  //       if (err instanceof Error) {
-  //         toast.error(`Error: ${err.message}`);
-  //       } else {
-  //         toast.error('An unknown error occurred.');
-  //       }
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchProducts();
-  // }, [activeTab, page]);
-
-  // Reset page when tab changes
-  
   useEffect(() => {
     const fetchProducts = async (append: boolean = false) => {
       try {
         setLoading(true);
-  
-        const filtered = otherProductData.data.results.filter(product =>
-         product.category.id === activeTab
-        );
-  
-        const pageSize = 3;
-        const startIndex = (page - 1) * pageSize;
-        const paginated = filtered.slice(startIndex, startIndex + pageSize);
-  
-        if (paginated.length < pageSize || startIndex + pageSize >= filtered.length) {
-          setHasMore(false);
-        } else {
-          setHasMore(true);
+        // Reset products when tab changes
+        if (page === 1) {
+          setProducts([]);
         }
-  
-        // Cast paginated items to Product[]
-        const typedPaginated = paginated ;
-  
-        setProducts(prev => append ? [...prev, ...typedPaginated] : typedPaginated);
-  
+
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/products/products/?page=${page}&page_size=3&category=${activeTab}`
+        );
+
+        if (!res.ok) {
+          let errorMessage = '';
+        
+          switch (res.status) {
+            case 400:
+              errorMessage = 'Bad Request - The server could not understand the request.';
+              break;
+            case 401:
+              errorMessage = 'Unauthorized - Please log in to access this resource.';
+              break;
+            case 403:
+              errorMessage = 'Forbidden - You do not have permission to access this.';
+              break;
+            case 404:
+              errorMessage = 'Not Found - The requested resource could not be found.';
+              break;
+            case 500:
+              errorMessage = 'Internal Server Error - Something went wrong on the server.';
+              break;
+            case 503:
+              errorMessage = 'Service Unavailable - The server is temporarily unavailable.';
+              break;
+            default:
+              errorMessage = `Unexpected error! Status: ${res.status}`;
+          }
+        
+          throw new Error(errorMessage);
+        }
+        
+
+        const data = await res.json();
+
+        if (data.data.results.length < 3) {
+          setHasMore(false); // No more products
+        }
+
+        // Check if data is valid and then append products
+        if (data?.data?.results && data.data.results.length > 0) {
+          setProducts(prev => append ? [...prev, ...data.data.results] : data.data.results);
+        }
+      
+        if (append) {
+          setLoading(true);
+        } else {
+          setLoading(false);
+        }
+        
+
       } catch (err: unknown) {
         if (err instanceof Error) {
           toast.error(`Error: ${err.message}`);
@@ -148,10 +107,13 @@ const OtherProducts = () => {
         setLoading(false);
       }
     };
-  
+
     fetchProducts();
   }, [activeTab, page]);
+
+  // Reset page when tab changes
   
+
 
   useEffect(() => {
     setPage(1);
@@ -184,7 +146,7 @@ const OtherProducts = () => {
 
         <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
         <p className='md:text-center mt-3 md:mt-10 text-gray-500 font-normal text-lg md:text-xl lg:text-2xl xl:text-3xl mb-7 md:mb-[75px] mx-auto lg:w-[93%]'>
-          [Brand Name] offers a wide range of mouthwatering options, including delicious burgers, 
+          Javcorp offers a wide range of mouthwatering options, including delicious burgers, 
           steaks, and more. Our dishes are made with the freshest ingredients and are delivered straignt to your door.
         </p>
         {loading ? <ProductSkeleton/>
@@ -198,7 +160,7 @@ const OtherProducts = () => {
                   width={613.2} 
                   height={409} 
                   layout='responsive'
-                  src={products[0].images as string}
+                  src={'https://res.cloudinary.com/dti5ce0mx/'+products[0].images}
                   />
                   <div className="flex mt-7 flex-col space-y-4 text-black px-8 w-full max-w-lg">
                     {/* Product Title */}
@@ -278,7 +240,7 @@ const OtherProducts = () => {
                   width={613.2} 
                   height={409} 
                   layout='responsive'
-                  src={products[1].images as string}
+                  src={'https://res.cloudinary.com/dti5ce0mx/'+products[1].images}
                   />
                 </div>
                 
@@ -305,7 +267,7 @@ const OtherProducts = () => {
                     width={613.2} 
                     height={409} 
                     layout='responsive'
-                    src={products[2].images as string}
+                    src={'https://res.cloudinary.com/dti5ce0mx/'+products[2].images}
                   />
                   <div className="flex mt-8 lg:ml-10 md:mt-0 flex-col space-y-4 text-black px-8 pl-8 w-full max-w-lg">
                     {/* Product Title */}

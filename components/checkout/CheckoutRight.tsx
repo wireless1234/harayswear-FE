@@ -9,6 +9,7 @@ import { updateCartItem, removeCartItem } from "@/services/cartService";
 import { Trash2 } from "lucide-react";
 import Cookies from "js-cookie";
 
+
 const CheckoutRight = () => {
   const { cart } = useCart();
   const queryClient = useQueryClient();

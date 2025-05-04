@@ -17,8 +17,8 @@ export default function LoginForm() {
 
   return (
     <div className="flex items-center justify-center md:min-h-screen w-full md:w-7/12 px-4 sm:px-6 lg:px-8">
-      <div className="w-full md:w-2/3 mx-auto text-white">
-        <h1 className="text-4xl sm:text-5xl font-bold text-white text-center mb-6">Log in</h1>
+      <div className="w-full md:w-2/3 mx-auto text-black">
+        <h1 className="text-4xl sm:text-5xl font-bold text-black text-center mb-6">Log in</h1>
         <p className="text-center text-sm sm:text-base">Don&apos;t have an account? <Link href="/signup" className="text-blue-500">Sign Up</Link></p>
 
         <Formik
@@ -49,11 +49,11 @@ export default function LoginForm() {
               )}
               {/* Emails */}
               <div>
-                <label className="text-white block mb-1">Email</label>
+                <label className="text-black block mb-1">Email</label>
                 <Field
                   type="text"
                   name="email"
-                  className="w-full p-3 rounded-md border border-[#DBDDE3] text-white focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
+                  className="w-full p-3 rounded-md border border-[#DBDDE3] text-black focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
                   placeholder="Enter your Email"
                 />
                 <ErrorMessage name="email" component="div" className="text-red-400 text-sm mt-1" />
@@ -61,11 +61,11 @@ export default function LoginForm() {
 
               {/* Password */}
               <div className="relative">
-                <label className="text-white block mb-1">Password</label>
+                <label className="text-black block mb-1">Password</label>
                 <Field
                   type={showPassword ? "text" : "password"}
                   name="password"
-                  className="w-full p-3 rounded-md border border-[#DBDDE3] text-white focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
+                  className="w-full p-3 rounded-md border border-[#DBDDE3] text-black focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
                   placeholder="Enter your password"
                 />
                     <span
@@ -81,7 +81,7 @@ export default function LoginForm() {
                 {/* Remember Me */}
                 <div className="flex items-center">
                   <Field type="checkbox" name="rememberMe" className="mr-2" />
-                  <label className="text-white">Remember Me</label>
+                  <label className="text-black">Remember Me</label>
                 </div>
                 
                 {/* Forgot Password */}
