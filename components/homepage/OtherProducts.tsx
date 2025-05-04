@@ -8,11 +8,12 @@ import { toast } from 'react-toastify';
 import { tabs, Product } from "@/lib/productCategoryData";
 import { ProductSkeleton } from '@/lib/skeletonLoader';
 import { useCart } from '@/hooks/useCart';
+import { otherProductData } from '@/lib/otherProductData';
 
 const OtherProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [activeTab, setActiveTab] = useState(tabs[12].id); 
+  const [activeTab, setActiveTab] = useState(tabs[0].id); 
   const [hasMore, setHasMore] = useState<boolean>(true); 
   const [page, setPage] = useState<number>(1);
   const [addingToCart, setAddingToCart] = useState<number | null>(null);
@@ -36,67 +37,107 @@ const OtherProducts = () => {
     }
   };
 
+  // useEffect(() => {
+  //   const fetchProducts = async (append: boolean = false) => {
+  //     try {
+  //       setLoading(true);
+  //       // Reset products when tab changes
+  //       if (page === 1) {
+  //         setProducts([]);
+  //       }
+
+  //       const res = await fetch(
+  //         `${process.env.NEXT_PUBLIC_API_URL}/products/products/?page=${page}&page_size=3&brand=${activeTab}`
+  //       );
+
+  //       if (!res.ok) {
+  //         let errorMessage = '';
+        
+  //         switch (res.status) {
+  //           case 400:
+  //             errorMessage = 'Bad Request - The server could not understand the request.';
+  //             break;
+  //           case 401:
+  //             errorMessage = 'Unauthorized - Please log in to access this resource.';
+  //             break;
+  //           case 403:
+  //             errorMessage = 'Forbidden - You do not have permission to access this.';
+  //             break;
+  //           case 404:
+  //             errorMessage = 'Not Found - The requested resource could not be found.';
+  //             break;
+  //           case 500:
+  //             errorMessage = 'Internal Server Error - Something went wrong on the server.';
+  //             break;
+  //           case 503:
+  //             errorMessage = 'Service Unavailable - The server is temporarily unavailable.';
+  //             break;
+  //           default:
+  //             errorMessage = `Unexpected error! Status: ${res.status}`;
+  //         }
+        
+  //         throw new Error(errorMessage);
+  //       }
+        
+
+  //       const data = await res.json();
+
+  //       if (data.data.results.length < 3) {
+  //         setHasMore(false); // No more products
+  //       }
+
+  //       // Check if data is valid and then append products
+  //       if (data?.data?.results && data.data.results.length > 0) {
+  //         setProducts(prev => append ? [...prev, ...data.data.results] : data.data.results);
+  //       }
+      
+  //       if (append) {
+  //         setLoading(true);
+  //       } else {
+  //         setLoading(false);
+  //       }
+        
+
+  //     } catch (err: unknown) {
+  //       if (err instanceof Error) {
+  //         toast.error(`Error: ${err.message}`);
+  //       } else {
+  //         toast.error('An unknown error occurred.');
+  //       }
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchProducts();
+  // }, [activeTab, page]);
+
+  // Reset page when tab changes
+  
   useEffect(() => {
     const fetchProducts = async (append: boolean = false) => {
       try {
         setLoading(true);
-        // Reset products when tab changes
-        if (page === 1) {
-          setProducts([]);
-        }
-
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/products/products/?page=${page}&page_size=3&brand=${activeTab}`
+  
+        const filtered = otherProductData.data.results.filter(product =>
+         product.category.id === activeTab
         );
-
-        if (!res.ok) {
-          let errorMessage = '';
-        
-          switch (res.status) {
-            case 400:
-              errorMessage = 'Bad Request - The server could not understand the request.';
-              break;
-            case 401:
-              errorMessage = 'Unauthorized - Please log in to access this resource.';
-              break;
-            case 403:
-              errorMessage = 'Forbidden - You do not have permission to access this.';
-              break;
-            case 404:
-              errorMessage = 'Not Found - The requested resource could not be found.';
-              break;
-            case 500:
-              errorMessage = 'Internal Server Error - Something went wrong on the server.';
-              break;
-            case 503:
-              errorMessage = 'Service Unavailable - The server is temporarily unavailable.';
-              break;
-            default:
-              errorMessage = `Unexpected error! Status: ${res.status}`;
-          }
-        
-          throw new Error(errorMessage);
-        }
-        
-
-        const data = await res.json();
-
-        if (data.data.results.length < 3) {
-          setHasMore(false); // No more products
-        }
-
-        // Check if data is valid and then append products
-        if (data?.data?.results && data.data.results.length > 0) {
-          setProducts(prev => append ? [...prev, ...data.data.results] : data.data.results);
-        }
-      
-        if (append) {
-          setLoading(true);
+  
+        const pageSize = 3;
+        const startIndex = (page - 1) * pageSize;
+        const paginated = filtered.slice(startIndex, startIndex + pageSize);
+  
+        if (paginated.length < pageSize || startIndex + pageSize >= filtered.length) {
+          setHasMore(false);
         } else {
-          setLoading(false);
+          setHasMore(true);
         }
-        
-
+  
+        // Cast paginated items to Product[]
+        const typedPaginated = paginated ;
+  
+        setProducts(prev => append ? [...prev, ...typedPaginated] : typedPaginated);
+  
       } catch (err: unknown) {
         if (err instanceof Error) {
           toast.error(`Error: ${err.message}`);
@@ -107,11 +148,11 @@ const OtherProducts = () => {
         setLoading(false);
       }
     };
-
+  
     fetchProducts();
   }, [activeTab, page]);
+  
 
-  // Reset page when tab changes
   useEffect(() => {
     setPage(1);
     setHasMore(true);
@@ -136,15 +177,15 @@ const OtherProducts = () => {
   return (
     <section ref={sectionRef} id='otherProducts' >
       <div className='max-w-[1440px] mx-auto overflow-hidden px-6 py-5 lg:px-[3.88rem]'>
-        <div className='bg-gradient-to-b from-white via-white to-[black]
+        <div className='bg-gradient-to-b from-black via-black to-white mb-5
         text-transparent bg-clip-text uppercase text-4xl md:text-7xl xl:text-[100px] md:text-center w-fit md:mx-auto font-bold'>
-          cigarettes
+          meals
         </div>
 
         <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
-        <p className='md:text-center mt-3 md:mt-10 text-[#CDCDCD] font-normal text-lg md:text-xl lg:text-2xl xl:text-3xl mb-7 md:mb-[75px] mx-auto lg:w-[93%]'>
-          Uncle V offers a diverse selection of cigarettes tailored for smokers who value smooth flavor and premium quality. 
-          Every pack is meticulously crafted to ensure a rich and satisfying smoking experience.
+        <p className='md:text-center mt-3 md:mt-10 text-gray-500 font-normal text-lg md:text-xl lg:text-2xl xl:text-3xl mb-7 md:mb-[75px] mx-auto lg:w-[93%]'>
+          [Brand Name] offers a wide range of mouthwatering options, including delicious burgers, 
+          steaks, and more. Our dishes are made with the freshest ingredients and are delivered straignt to your door.
         </p>
         {loading ? <ProductSkeleton/>
         :
@@ -153,12 +194,13 @@ const OtherProducts = () => {
                 <div className=' grid grid-cols-1 md:grid-cols-2'>
                   <Image 
                   className='mt-5 md:mt-[106px] rounded-4xl' 
-                  alt="rollo blue" 
+                  alt={products[0].name} 
                   width={613.2} 
                   height={409} 
-                  src={'https://res.cloudinary.com/dti5ce0mx/'+products[0].images }
+                  layout='responsive'
+                  src={products[0].images as string}
                   />
-                  <div className="flex mt-7 flex-col space-y-4 text-white bg-black px-8 w-full max-w-lg">
+                  <div className="flex mt-7 flex-col space-y-4 text-black px-8 w-full max-w-lg">
                     {/* Product Title */}
                     <h1 className="text-4xl uppercase text-center md:text-left md:text-6xl font-bold">{products[0].name}</h1>
 
@@ -174,11 +216,11 @@ const OtherProducts = () => {
                     <button 
                       onClick={() => handleAddToCart(products[0].id)} 
                       disabled={addingToCart === products[0].id}
-                      className={`group mx-auto md:mx-0 flex w-fit items-center justify-center gap-2 px-9 py-2.5 border border-[#A70D13] rounded-full text-white hover:bg-[#A70D13] transition ${
+                      className={`group mx-auto md:mx-0 flex w-fit items-center justify-center gap-2 px-9 py-2.5 border border-[#A70D13] rounded-full text-black hover:bg-[#A70D13] transition ${
                         addingToCart === products[0].id ? "opacity-50 cursor-not-allowed" : ""
                       }`}
                     >
-                      <span className="text-lg">
+                      <span className="text-lg group-hover:text-white">
                         {addingToCart === products[0].id ? "Adding..." : "Add to cart"}
                       </span>
                       <IoIosArrowDown className="w-5 h-5 text-[#A70D13] group-hover:text-white" />
@@ -204,7 +246,7 @@ const OtherProducts = () => {
 
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:pl-[62px] mt-10 md:mt-0 lg:-mt-10 xl:-mt-20'>
                   
-                  <div className="order-2 md:order-1 flex md:mt-20 lg:mt-28 xl:mt-[187px] flex-col space-y-4 text-white bg-black px-8 w-full max-w-lg">
+                  <div className="order-2 md:order-1 flex md:mt-20 lg:mt-28 xl:mt-[187px] flex-col space-y-4 text-black px-8 w-full max-w-lg">
                     {/* Product Title */}
                     <h1 className="text-4xl text-center uppercase md:text-left md:text-6xl font-bold">{products[1].name}</h1>
 
@@ -220,11 +262,11 @@ const OtherProducts = () => {
                     <button 
                       onClick={() => handleAddToCart(products[1].id)} 
                       disabled={addingToCart === products[1].id}
-                      className={`group flex mx-auto md:mx-0 w-fit items-center justify-center gap-2 px-9 py-2.5 border border-[#72BEE8] rounded-full text-white hover:bg-[#72BEE8] transition ${
+                      className={`group flex mx-auto md:mx-0 w-fit items-center justify-center gap-2 px-9 py-2.5 border border-[#72BEE8] rounded-full text-black hover:bg-[#72BEE8] transition ${
                         addingToCart === products[1].id ? "opacity-50 cursor-not-allowed" : ""
                       }`}
                     >
-                      <span className="text-lg">
+                      <span className="text-lg group-hover:text-white">
                         {addingToCart === products[1].id ? "Adding..." : "Add to cart"}
                       </span>
                       <IoIosArrowDown className="w-5 h-5 text-[#72BEE8] group-hover:text-white" />
@@ -232,10 +274,11 @@ const OtherProducts = () => {
                   </div>
                   <Image 
                   className='mt-8 md:mt-0 z-10 order-1 md:order-2 rounded-4xl' 
-                  alt="rollo green" 
+                  alt={products[1].name} 
                   width={613.2} 
                   height={409} 
-                  src={'https://res.cloudinary.com/dti5ce0mx/'+products[1].images }
+                  layout='responsive'
+                  src={products[1].images as string}
                   />
                 </div>
                 
@@ -258,12 +301,13 @@ const OtherProducts = () => {
                 <div className='mt-16 md:mt-20 lg:28 xl:mt-52 grid grid-cols-1 md:grid-cols-2 lg:pl-[129px]'>
                   <Image 
                     className=' z-10 rounded-4xl' 
-                    alt="rollo red" 
+                    alt={products[2].name} 
                     width={613.2} 
                     height={409} 
-                    src={'https://res.cloudinary.com/dti5ce0mx/'+products[2].images }
+                    layout='responsive'
+                    src={products[2].images as string}
                   />
-                  <div className="flex mt-8 lg:ml-10 md:mt-0 flex-col space-y-4 text-white bg-black px-8 pl-8 w-full max-w-lg">
+                  <div className="flex mt-8 lg:ml-10 md:mt-0 flex-col space-y-4 text-black px-8 pl-8 w-full max-w-lg">
                     {/* Product Title */}
                     <h1 className="text-4xl text-center uppercase md:text-left md:text-6xl font-bold">{products[2].name}</h1>
 
@@ -279,11 +323,11 @@ const OtherProducts = () => {
                     <button 
                       onClick={() => handleAddToCart(products[2].id)} 
                       disabled={addingToCart === products[2].id}
-                      className={`group flex mx-auto md:mx-0 w-fit items-center justify-center gap-2 px-9 py-2.5 border border-[#1B9548] rounded-full text-white hover:bg-[#1B9548] transition ${
+                      className={`group flex mx-auto md:mx-0 w-fit items-center justify-center gap-2 px-9 py-2.5 border border-[#1B9548] rounded-full text-black hover:bg-[#1B9548] transition ${
                         addingToCart === products[2].id ? "opacity-50 cursor-not-allowed" : ""
                       }`}
                     >
-                      <span className="text-lg">
+                      <span className="text-lg group-hover:text-white">
                         {addingToCart === products[2].id ? "Adding..." : "Add to cart"}
                       </span>
                       <IoIosArrowDown className="w-5 h-5 text-[#1B9548] group-hover:text-white" />

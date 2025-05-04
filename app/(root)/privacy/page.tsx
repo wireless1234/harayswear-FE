@@ -12,7 +12,7 @@ const PrivacyPage = () => {
             </p>
         </section>
         <section className='py-4 px-10'>
-            <ol className='text-white list-decimal marker:text-gray-300'>
+            <ol className='text-black list-decimal marker:text-gray-300'>
                 <li>
                     <h4 className='text-lg font-semibold'>Privacy Act</h4>
                     <p> 
@@ -39,7 +39,7 @@ const PrivacyPage = () => {
                 </li>
                 <li>
                     <p> How We Collect, Hold, Use and Disclose Personal Information</p>
-                    <ol className='text-white list-decimal marker:text-gray-300 pl-4'>
+                    <ol className='text-black list-decimal marker:text-gray-300 pl-4'>
                         <li>
                             <h4 className='text-lg font-semibold'>Collection</h4>
                             <p> 
@@ -255,7 +255,7 @@ const PrivacyPage = () => {
                         in respect of online services provided to you by us. &quot;Online services&quot; includes any services
                         provided by us via the Internet (including email and web pages).
                     </p>
-                    <ol className='text-white list-decimal marker:text-gray-300 pl-4'>
+                    <ol className='text-black list-decimal marker:text-gray-300 pl-4'>
                         <li>
                             <h4 className='text-lg font-semibold'>Automatic Server Logs</h4>
                             <p>
@@ -319,7 +319,7 @@ const PrivacyPage = () => {
                 <li>
                     <h4 className='text-lg font-semibold'>Contact Information</h4>
                     <p>
-                        You may contact our Privacy Officer: Email: info@unclev.com.au
+                        You may contact our Privacy Officer: Email: info@Javcorp.com.au
                     </p>
                 </li>
             </ol>

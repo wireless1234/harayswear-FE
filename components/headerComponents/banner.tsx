@@ -11,7 +11,7 @@ const banners = [
   {
     image: "/images/purple.png",
     imageBlur: "/images/purple-blur.png",
-    imageBg: "/images/purple-bg.png",
+    imageBg: "/images/chicken-shnitzel.png",
     alt: "grape ice",
     color: "#7C3AED",
     colorHover: "#7C3AED9d",
@@ -19,7 +19,7 @@ const banners = [
   {
     image: "/images/red.png",
     imageBlur: "/images/red-blur.png",
-    imageBg: "/images/red-bg.png",
+    imageBg: "/images/charcuteria-board.png",
     alt: "cherry pomegranate",
     color: "#B1182F",
     colorHover: "#B1182F9d",
@@ -27,11 +27,27 @@ const banners = [
   {
     image: "/images/green.png",
     imageBlur: "/images/green-blur.png",
-    imageBg: "/images/green-bg.png",
+    imageBg: "/images/burger.png",
     alt: "double apple",
     color: "#7DA932",
     colorHover: "#7DA9329d",
-  }
+  },
+  {
+    image: "/images/purple.png",
+    imageBlur: "/images/green-purple.png",
+    imageBg: "/images/rump.png",
+    alt: "double apple",
+    color: "#7C3AED",
+    colorHover: "#7C3AED9d",
+  },
+  {
+    image: "/images/red.png",
+    imageBlur: "/images/red-blur.png",
+    imageBg: "/images/pork-ribs.png",
+    alt: "double apple",
+    color: "#B1182F",
+    colorHover: "#B1182F9d",
+  },
 ]
 
 const PremiumVapingBanner = () => {
@@ -62,14 +78,14 @@ const PremiumVapingBanner = () => {
               fontStyle: 'normal',
               color: item.color }} 
               className="absolute inset-5 md:inset-10 lg:inset-12 xl:inset-20 left-1 md:left-2 lg:left-2.5 xl:left-3 font-bold text-left">
-                Vaping
+                Dining
 
             </span>
           </h1>
 
           {/* Description */}
-          <p className="text-[22px] lg:w-[55%] font-semibold text-[#E5E7EBA6] mt-16">
-            Welcome to Uncle V, your go-to destination for premium vape products delivered straignt to your door.
+          <p className="text-[22px] lg:w-[55%] font-semibold text-gray-800 mt-16">
+            Welcome to [Brand Name], your go-to destination for premium dishes delivered straignt to your door.
           </p>
 
           {/* CTA Button */}
@@ -88,7 +104,7 @@ const PremiumVapingBanner = () => {
         </div>
 
         {/* Vaping Device Image */}
-        <div
+        {/* <div
           className="blur-cont absolute hidden md:block bottom-0 right-0 md:right-3 lg:-right-3 xl:-right-16  z-10"
         >
           <Image src={item.imageBlur} alt={item.alt} width={393} height={726} className="blur-img w-full h-full md:w-[393px] md:h-[450.54px] xl:w-[440px] xl:h-[540.54]"/>
@@ -105,7 +121,7 @@ const PremiumVapingBanner = () => {
         >
           <Image src={item.image} alt={item.alt} width={464.42} height={771.54} className="img w-full h-full md:w-[393px] md:h-[530.54px] xl:w-[440px] xl:h-[650.54] transform hover:rotate-3 transition-transform duration-300 ease-in-out " />
           
-        </div>
+        </div> */}
         
       </div>
     </div>

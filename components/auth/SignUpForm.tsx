@@ -204,7 +204,7 @@ const SignUpForm = () => {
               {/* Accept Terms */}
               <div className="flex items-center">
                 <Field type="checkbox" name="acceptTerms" className="mr-2" />
-                <label className="text-white">I hereby accept the terms and conditions of Uncle V</label>
+                <label className="text-white">I hereby accept the terms and conditions of Javcorp</label>
                 <ErrorMessage name="acceptTerms" component="div" className="text-red-400 text-sm ml-2" />
               </div>
 
