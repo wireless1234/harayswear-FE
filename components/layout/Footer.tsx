@@ -4,7 +4,7 @@ import { IoLogoDribbble, IoLogoInstagram } from "react-icons/io5";
 import Link from "next/link";
 const Footer = () => {
   return (
-    <footer className="relative bg-gradient-to-b from-black to-[#111439] text-white px-10 2xl:px-0 py-16">
+    <footer className="relative bg-gradient-to-b from-[#F8F8F9] via-[#7C3AED]/90 via-[#7C3AED]/90 to-[#7C3AED] text-white px-10 2xl:px-0 py-16">
       <div className="max-w-5xl mx-auto flex flex-col lg:flex-row lg:justify-between  text-left">
         {/* Left Section - Socials & Text */}
         <div className="lg:w-[33%]">
@@ -83,7 +83,7 @@ const Footer = () => {
         {/* Main Gradient Text */}
         <span
           className="relative max-w-[1215px] text-[2.50rem] md:text-[5.4rem] lg:text-[120px] xl:text-[155px]
-                    bg-gradient-to-b from-[#7C3AED] via-[#7C3AED] to-black bg-clip-text text-transparent"
+                    bg-gradient-to-b from-[#7C3AED] via-[#7C3AED1a] to-[#F8F8F9] bg-clip-text text-transparent"
         >
           JAVCORP
         </span>

@@ -26,7 +26,11 @@ const Navbar = () => {
     <div className="w-11/12 lg:w-8/12 mx-auto flex justify-between items-center px-4 lg:px-8 bg-[#00000066] text-white rounded-3xl shadow-lg backdrop-blur-md fixed left-1/2 -translate-x-1/2 top-2 z-100">
       {/* Logo */}
       <Link href="/" className="text-xl font-bold">
-        <Image src="/images/unclevlogo.png" alt="Logo" width={70} height={70} className='size-[50px] md:size-[70px]' />
+        <Image 
+        src="/images/unclevlogo.png" 
+        alt="Logo" 
+        width={80} 
+        height={80} className='size-[60px] md:size-[80px]' />
       </Link>
 
       {/* Mobile Menu Toggle */}
