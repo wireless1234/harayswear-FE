@@ -84,7 +84,7 @@ const PremiumVapingBanner = () => {
           </h1>
 
           {/* Description */}
-          <p className="text-[22px] lg:w-[55%] font-semibold text-black mt-16">
+          <p className="text-[22px] lg:w-[55%] font-semibold text-white mt-16">
             Welcome to Javcorp, your go-to destination for premium dishes delivered straignt to your door.
           </p>
 
