@@ -19,15 +19,11 @@ interface Props {
 
 const ProductSelectionCard = ({ products, isLoading, onAddToCartSuccess }: Props) => {
   const { addToCart } = useCart();
-  const { user, isLoading: isUserLoading } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
 
   // Ensure sessionKey exists for guest users
   const guestSessionKey = Cookies.get("session_key");
-  if (!user && !isUserLoading && !guestSessionKey) {
-    console.log("Generating new session key for guest user");
-    // guestSessionKey = uuidv4();
-  }
 
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
 

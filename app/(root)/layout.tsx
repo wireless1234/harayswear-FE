@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import Newsletter from "@/components/homepage/Newsletter";
 
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
@@ -20,6 +21,7 @@ export default function RootLayout({
       <ToastContainer position="top-right" autoClose={3000}/>
       <Navbar />
       {children}
+      <Newsletter />
       <Footer />
     </main>
   );

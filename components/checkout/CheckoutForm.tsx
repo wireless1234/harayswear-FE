@@ -309,7 +309,7 @@ const CheckoutForm: React.FC = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="text-xl w-1/3 bg-[var(--color-purple)] text-white py-4 mt-4 rounded-3xl mx-auto block cursor-pointer"
+            className="text-xl w-1/3 border border-black py-4 mt-4 rounded-3xl mx-auto block cursor-pointer"
             disabled={isPending || isPaymentProcessing}
           >
             {isPending

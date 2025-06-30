@@ -20,8 +20,8 @@ export const getAllProducts = async (category?: number, brand?: number): Promise
 
 // Get product by ID
 export const getProductById = async (productId: number): Promise<Product> => {
-  const { data } = await apiClient.get(`/products/products${productId}/`);
-  return data;
+  const { data } = await apiClient.get(`/products/products/${productId}/`);
+  return data.data;
 };
 
 // Get all brands

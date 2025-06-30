@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+
   images: {
     remotePatterns: [
       {
@@ -10,10 +11,13 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "vape-ecommerce-be-24bd.onrender.com",
+        hostname: "https://api.unclev.com.au",
       },
     ],
+    unoptimized: true,
   },
+  trailingSlash: true,
+  output: 'export',
 };
 
 export default nextConfig;
