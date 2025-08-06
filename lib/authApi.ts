@@ -57,6 +57,8 @@ export const signup = async (credentials: {
   dateOfBirth: string;
   phoneNumber: string;
   password: string;
+  address: string;
+  state: string;
 }) => {
   try {
     const { data } = await apiClient.post("/auth/register/", {
@@ -65,6 +67,8 @@ export const signup = async (credentials: {
       date_of_birth: credentials.dateOfBirth,
       phone_number: credentials.phoneNumber,
       password: credentials.password,
+      address: credentials.address,
+      state: credentials.state,
     });
     return data;
   } catch (error) {

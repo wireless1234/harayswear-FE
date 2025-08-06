@@ -23,41 +23,40 @@ const Navbar = () => {
     <section className="relative w-full bg-white border-b border-gray-200">
       {/* Top Banner */}
       <div className="w-full text-center text-sm py-2 text-gray-800 border-b border-gray-200">
-        Your Favorite Meals, Delivered to Your Doorstep!
+        Australia&apos;s #1 trusted online Alibarbar Vape Store
       </div>
 
       {/* Main Navbar */}
-      <div className="w-full flex justify-between items-center px-4 py-2">
-        {/* Left: Logo */}
-        <div className="flex-shrink-0">
+      <div className="w-full flex justify-between items-center px-4 py-4 max-w-7xl mx-auto">
+
+        <div className="flex items-center gap-4">
           <Link href="/" className="block">
             <Image
-              src="/images/javcorplogo.png"
+              src="/images/logo.jpeg"
               alt="Logo"
-              width={60}
-              height={60}
+              width={100}
+              height={100}
               className="rounded-full"
             />
           </Link>
+          <nav className="hidden lg:flex gap-6 text-gray-700 font-medium">
+            {["Home", "Alibarbar", "Contact"].map((name) => {
+              const path = name.toLowerCase() === "home" ? "/" : name.toLowerCase() === "alibarbar" ? "/catalog" : `/${name.toLowerCase()}`;
+              return (
+                <Link
+                  key={path}
+                  href={path}
+                  className={`hover:underline ${
+                    pathname === path ? "underline" : ""
+                  }`}
+                >
+                  {name}
+                </Link>
+              );
+            })}
+          </nav>
         </div>
 
-        {/* Center: Links */}
-        <nav className="hidden lg:flex gap-6 text-gray-700 font-medium">
-          {["Home", "Catalog", "Contact"].map((name) => {
-            const path = name.toLowerCase() === "home" ? "/" : `/${name.toLowerCase()}`;
-            return (
-              <Link
-                key={path}
-                href={path}
-                className={`hover:underline ${
-                  pathname === path ? "underline" : ""
-                }`}
-              >
-                {name}
-              </Link>
-            );
-          })}
-        </nav>
 
         {/* Right: Icons */}
         <div className="flex items-center gap-4">
@@ -89,8 +88,8 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="lg:hidden fixed top-24 left-0 w-full bg-white shadow-md rounded-b-lg z-40 py-4">
           <nav className="flex flex-col items-center gap-4">
-            {["Home", "Catalog", "Contact"].map((name) => {
-              const path = name.toLowerCase() === "home" ? "/" : `/${name.toLowerCase()}`;
+            {["Home", "Alibarbar", "Contact"].map((name) => {
+              const path = name.toLowerCase() === "home" ? "/" : name.toLowerCase() === "alibarbar" ? "/catalog" : `/${name.toLowerCase()}`;
               return (
                 <Link
                   key={path}

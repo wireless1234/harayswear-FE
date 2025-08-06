@@ -57,3 +57,9 @@ export interface PaymentData {
   cancel_url: string;
   failure_url: string;
   }
+
+export interface PaymentMethod {
+  id: number;
+  label: string;
+  value: string;
+}

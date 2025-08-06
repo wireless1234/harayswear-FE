@@ -24,8 +24,20 @@ const SignUpForm = () => {
       phoneNumber: string;
       password: string;
       address: string;
+      state: string;
     }) => signup(values),
   });
+
+  const ALLOWED_STATES = [
+    "Victoria",
+    "New South Wales",
+    "Queensland",
+    "South Australia",
+    "Western Australia",
+    "Tasmania",
+    "Northern Territory",
+    "Australian Capital Territory",
+  ];
 
   return (
     <div className="flex items-center justify-center md:min-h-screen w-full md:w-7/12 px-4 sm:px-6 lg:px-8">
@@ -41,6 +53,7 @@ const SignUpForm = () => {
             password: "",
             confirmPassword: "",
             address: "",
+            state: "",
             acceptTerms: false,
           }}
           validationSchema={Yup.object({
@@ -56,6 +69,7 @@ const SignUpForm = () => {
               .oneOf([Yup.ref("password")], "Passwords must match")
               .required("Confirm password is required"),
             address: Yup.string().required("Address is required"),
+            state: Yup.string().required("State is required"),
             acceptTerms: Yup.boolean().oneOf([true], "You must accept the terms and conditions"),
           })}
           onSubmit={(values, { setSubmitting }) => {
@@ -67,6 +81,7 @@ const SignUpForm = () => {
                 phoneNumber: values.phoneNumber,
                 password: values.password,
                 address: values.address,
+                state: values.state,
               },
               {
                 onSuccess: (data) => {
@@ -165,6 +180,24 @@ const SignUpForm = () => {
                 <ErrorMessage name="address" component="div" className="text-red-400 text-sm mt-1" />
               </div>
 
+              {/* State */}
+              <div>
+                <label className="text-black block mb-1">State *</label>
+                <Field
+                  as="select"
+                  name="state"
+                  className="w-full p-3 rounded-md border border-[#DBDDE3] text-black focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
+                >
+                  <option value="" disabled>Select your state</option>
+                  {ALLOWED_STATES.map((state) => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </Field>
+                <ErrorMessage name="state" component="div" className="text-red-400 text-sm mt-1" />
+              </div>
+
               {/* Password */}
               <div className="relative">
                 <label className="text-black block mb-1">Password</label>
@@ -204,7 +237,7 @@ const SignUpForm = () => {
               {/* Accept Terms */}
               <div className="flex items-center">
                 <Field type="checkbox" name="acceptTerms" className="mr-2" />
-                <label className="text-black">I hereby accept the terms and conditions of Javcorp</label>
+                <label className="text-black">I hereby accept the terms and conditions of Vaperoo</label>
                 <ErrorMessage name="acceptTerms" component="div" className="text-red-400 text-sm ml-2" />
               </div>
 
@@ -212,7 +245,7 @@ const SignUpForm = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-1/2 block mx-auto bg-[var(--color-purple)] text-white font-semibold p-3 rounded-3xl hover:bg-purple-500 transition duration-200 cursor-pointer"
+                className="w-1/2 block mx-auto border border-black font-semibold p-3 rounded-3xl hover:bg-gray-200 transition duration-200 cursor-pointer"
               >
                 {isSubmitting ? "Signing up..." : "Sign Up"}
               </button>

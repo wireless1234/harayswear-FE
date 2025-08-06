@@ -1,12 +1,16 @@
 "use client";
 import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FieldProps } from 'formik';
 import * as Yup from 'yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Cookies from "js-cookie";
 import { createOrder, createPayment } from '@/services/orderService';
 import { OrderData } from '@/types';
 import { useAuth } from '@/hooks/useAuth';
+import { useServiceCharge } from '@/hooks/useServiceCharge';
+import { usePaymentMethods } from '@/hooks/usePayment';
+import { toast } from 'react-toastify';
+import AddressAutocomplete from '@/components/ui/AddressAutocomplete';
 
 interface CheckoutFormValues {
   email: string;
@@ -29,9 +33,19 @@ const CheckoutForm: React.FC = () => {
   const [useShippingAddress, setUseShippingAddress] = useState<boolean>(true);
   const [isPaymentProcessing, setIsPaymentProcessing] = useState<boolean>(false);
   const { user } = useAuth();
+  const { serviceChargeAmount } = useServiceCharge();
   const isLoggedIn = !!user; // Check if user is logged in
 
   const queryClient = useQueryClient();
+
+    const { paymentMethods } = usePaymentMethods();
+  const paymentOptions = paymentMethods
+  ? paymentMethods.map((method) => ({
+      value: method.value,
+      label: method.label,
+    }))
+  : [];
+
   const { mutate, isPending } = useMutation({
     mutationFn: createOrder,
     onSuccess: (data) => {
@@ -39,13 +53,18 @@ const CheckoutForm: React.FC = () => {
       queryClient.invalidateQueries({ queryKey: ["cart",] });
       setIsPaymentProcessing(true);
 
+      const serviceCharge = serviceChargeAmount;
+      const amount =
+      data.data.payment_method === "paypal"
+        ? (data.data.total_price + serviceCharge) * 0.6 // Do not multiply by 100 for PayPal
+        : (data.data.total_price + serviceCharge) * 100 * 0.6; // Multiply by 100 for other methods
       const paymentData = {
-        amount: data.data.total_price * 100 * 0.6, // Convert to base currency unit, convert to AUD,
+        amount: amount,
         currency_code: "USD",
         order_id: data.data.id,
-        success_url: `https://javcorp.com.au/checkout/order-success?status=success&orderId=${data.data.id}`,
-        cancel_url: `https://javcorp.com.au/checkout/order-success?status=canceled&orderId=${data.data.id}`,
-        failure_url: `https://javcorp.com.au/checkout/order-success?status=failed&orderId=${data.data.id}`,
+        success_url: `https://vaperoo.com.au/checkout/order-success?status=success&orderId=${data.data.id}`,
+        cancel_url: `https://vaperoo.com.au/checkout/order-success?status=canceled&orderId=${data.data.id}`,
+        failure_url: `https://vaperoo.com.au/checkout/order-success?status=failed&orderId=${data.data.id}`,
       };
 
       createPaymentMutation(paymentData);
@@ -70,7 +89,14 @@ const CheckoutForm: React.FC = () => {
       console.log("Payment created successfully:", data);
       // alert("Redirecting to payment page...");
       setIsPaymentProcessing(false);
-      window.location.href = data.data.payment_url; // Redirect to payment URL
+      if (data.data.payment_method === "squad" || data.data.payment_method === "ziina2" || data.data.payment_method === "stripe") {
+        const encodedUrl = encodeURIComponent(data.data.payment_url);
+        window.location.href = `https://hayraywears.com/payment-processing?redirectlink=${encodedUrl}`;
+      } else if (data.data.payment_method === "paypal") {
+        window.location.href = `https://javcorp.com.au/payment-processing?redirectlink=${data.data.payment_url}`;
+      } else {
+        window.location.href = data.data.payment_url; // Redirect to payment URL
+      }
     },
     onError: (error) => {
       console.error("Payment creation failed:", error);
@@ -85,11 +111,11 @@ const CheckoutForm: React.FC = () => {
     country: 'Australia',
     firstName: '',
     lastName: '',
-    city: 'Yeppoon',
-    state: 'Queensland',
-    zip: '4703',
+    city: '',
+    state: '',
+    zip: '',
     terms: false,
-    paymentMethod: 'ziina',
+    paymentMethod: '',
     cardNumber: '',
     shippingAddress: '',
     billingAddress: '',
@@ -121,6 +147,7 @@ const CheckoutForm: React.FC = () => {
     zip: Yup.string().required('Required'),
     terms: Yup.boolean().oneOf([true], 'You must accept the Terms and Conditions'),
     paymentMethod: Yup.string().required('Required'),
+    shippingAddress: Yup.string().required('Address is required'),
     billingAddress: Yup.string().when('useShippingAddress', {
       is: false,
       then: (schema) => schema.required('Required'),
@@ -130,6 +157,21 @@ const CheckoutForm: React.FC = () => {
   const handleSubmit = (values: CheckoutFormValues) => {
     const session_key = Cookies.get("session_key");
     const isGuest = !Cookies.get("access_token");
+
+    // Get current time in Australian timezone
+    const now = new Date();
+    const australianTime = new Date(
+      now.toLocaleString("en-US", { timeZone: "Australia/Brisbane" })
+    );
+    const currentHour = australianTime.getHours();
+
+    // Check if the order is outside store hours
+    if (currentHour < 7 || currentHour >= 19) {
+      toast.info("Orders placed outside 7 AM - 7 PM will be delivered the next day during store hours.", {
+        position: "top-center",
+        autoClose: 5000,
+      });
+    }
   
     const orderData: OrderData = {
       payment_method: values.paymentMethod,
@@ -151,14 +193,16 @@ const CheckoutForm: React.FC = () => {
     mutate(isGuest ? { orderData, session_key } : { orderData });
   };
 
-    // Function to format card number dynamically
-    // const formatCardNumber = (value: string) => {
-    //   return value
-    //     .replace(/\D/g, "") // Remove non-numeric characters
-    //     .replace(/(\d{4})/g, "$1 ") // Add space after every 4 digits
-    //     .trim(); // Remove trailing space
-    // };
-
+  const ALLOWED_STATES = [
+    "Victoria",
+    "New South Wales",
+    "Queensland",
+    "South Australia",
+    "Western Australia",
+    "Tasmania",
+    "Northern Territory",
+    "Australian Capital Territory",
+  ];
   return (
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
       {() => (
@@ -183,6 +227,32 @@ const CheckoutForm: React.FC = () => {
 
           {/* Delivery Address */}
           <h2 className="text-xl font-semibold mt-6 mb-4">Delivery</h2>
+          
+          {/* Same Day Delivery Areas */}
+          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <h3 className="text-lg font-semibold text-yellow-800 mb-3">Same Day Delivery Areas</h3>
+            <div className="text-sm text-yellow-700 space-y-2">
+              <div>
+                <strong>VIC:</strong> Melbourne CBD and surrounding suburbs within 15km • Bundoora and 15km radius • Bentleigh and 15km radius • Mentone and 15km radius
+              </div>
+              <div>
+                <strong>NSW:</strong> Yagoona and 15km radius • Hunters Hill and 15km radius • Riverstone and 15km radius • Yamba • Ballina • Cabarita • Kingscliff • Tweed Heads and 10km radius
+              </div>
+              <div>
+                <strong>QLD:</strong> Gold Coast and surrounding areas • Rockhampton • Emerald • Blackwater • Yeppoon • Gracemere • Bowen • Proserpine • Airlie Beach
+              </div>
+              <div>
+                <strong>SA:</strong> Port Lincoln
+              </div>
+              <div>
+                <strong>NT:</strong> Darwin
+              </div>
+              <div>
+                <strong>WA:</strong> Perth CBD • Fremantle • Falcon • Warnbro • Armadale • Baldivis • Secret Harbour • Rockingham • Medina • Cockburn • Mandurah and 15km radius • Bunbury • Manjimup • Collie • Pinjarra
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-2 gap-4 mb-3">
             {!isLoggedIn && (
               <>
@@ -210,17 +280,28 @@ const CheckoutForm: React.FC = () => {
           <div className="grid grid-cols-3 gap-4">
             <div>
               <label>State</label>
-              <Field type="text" name="state" disabled className="w-full border p-2 rounded-lg" />
+                <Field
+                  as="select"
+                  name="state"
+                  className="w-full p-3 rounded-md border border-[#DBDDE3] text-black focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
+                >
+                  <option value="" disabled>Select your state</option>
+                  {ALLOWED_STATES.map((state) => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </Field>
               <ErrorMessage name="state" component="div" className="text-red-500 text-sm" />
             </div>
             <div>
               <label>City</label>
-              <Field type="text" name="city" disabled className="w-full border p-2 rounded-lg" />
+              <Field type="text" name="city" className="w-full border p-2 rounded-lg" />
               <ErrorMessage name="city" component="div" className="text-red-500 text-sm" />
             </div>
             <div>
               <label>ZIP Code</label>
-              <Field type="text" name="zip" disabled className="w-full border p-2 rounded-lg" />
+              <Field type="text" name="zip" className="w-full border p-2 rounded-lg" />
               <ErrorMessage name="zip" component="div" className="text-red-500 text-sm" />
             </div>
           </div>
@@ -239,38 +320,65 @@ const CheckoutForm: React.FC = () => {
           <div className="mb-3">
             <label>Payment Method *</label>
             <Field as="select" name="paymentMethod" className="w-full border p-2 rounded-lg">
-              {/* <option value="stripe">Stripe</option> */}
-              <option value="ziina">Ziina</option>
-              {/* <option value="Square">Square</option> */}
-              {/* <option value="pay_at_counter">Pay At Counter</option> */}
-
+              <option value="" disabled>
+                Select Payment Method
+              </option>
+              {paymentOptions.length > 0 ? (
+                paymentOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))
+              ) : (
+                <option value="" disabled>
+                  No payment methods available
+                </option>
+              )}
             </Field>
             <ErrorMessage name="paymentMethod" component="div" className="text-red-500 text-sm" />
           </div>
 
           {/* Shipping Address */}
           <div className="mb-3">
-            <label>Street Address</label>
-            <Field type="text" name="shippingAddress" className="w-full border p-2 rounded-lg" />
+            <label>Address</label>
+            <Field name="shippingAddress">
+              {({ field, form }: FieldProps) => (
+                <AddressAutocomplete
+                  value={field.value}
+                  onChange={(value: string) => form.setFieldValue('shippingAddress', value)}
+                  onPlaceChanged={(place: google.maps.places.PlaceResult) => {
+                    // Auto-fill other address fields if available
+                    const addressComponents = place.address_components;
+                    if (addressComponents) {
+                      let city = '';
+                      let state = '';
+                      let zip = '';
+                      
+                      addressComponents.forEach((component) => {
+                        const types = component.types;
+                        if (types.includes('locality')) {
+                          city = component.long_name;
+                        } else if (types.includes('administrative_area_level_1')) {
+                          state = component.long_name;
+                        } else if (types.includes('postal_code')) {
+                          zip = component.long_name;
+                        }
+                      });
+                      
+                      // Auto-fill the form fields
+                      if (city) form.setFieldValue('city', city);
+                      if (state) form.setFieldValue('state', state);
+                      if (zip) form.setFieldValue('zip', zip);
+                    }
+                  }}
+                  placeholder="Start typing your address..."
+                  className="w-full border p-2 rounded-lg"
+                  name="shippingAddress"
+                />
+              )}
+            </Field>
             <ErrorMessage name="shippingAddress" component="div" className="text-red-500 text-sm" />
           </div>
-
-          {/* Card Details */}
-          {/* <div className="mb-3">
-            <label>Debit Card</label>
-            <Field
-              type="text"
-              name="cardNumber"
-              placeholder="**** **** **** 4578"
-              className="w-full border p-2 rounded-lg"
-              value={values.cardNumber}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setFieldValue("cardNumber", formatCardNumber(e.target.value));
-              }}
-              maxLength={19}
-            />
-            <ErrorMessage name="cardNumber" component="div" className="text-red-500 text-sm" />
-          </div> */}
 
           {/* Comments */}
           <div className="mb-3">
@@ -301,7 +409,17 @@ const CheckoutForm: React.FC = () => {
           {!useShippingAddress && (
             <div className="mb-3">
               <label>Billing Address</label>
-              <Field type="text" name="billingAddress" className="w-full border p-2 rounded-lg" />
+              <Field name="billingAddress">
+                {({ field, form }: FieldProps) => (
+                  <AddressAutocomplete
+                    value={field.value}
+                    onChange={(value: string) => form.setFieldValue('billingAddress', value)}
+                    placeholder="Start typing your billing address..."
+                    className="w-full border p-2 rounded-lg"
+                    name="billingAddress"
+                  />
+                )}
+              </Field>
               <ErrorMessage name="billingAddress" component="div" className="text-red-500 text-sm" />
             </div>
           )}

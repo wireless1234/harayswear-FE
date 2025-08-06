@@ -25,7 +25,7 @@ const CheckoutLeft = () => {
               onClick={handleLogin}
               className="border border-black text-xl font-semibold py-2 px-4 mt-4 rounded-lg cursor-pointer"
             >
-              Log in
+              Log in/Sign Up
             </button>
           </div>
 

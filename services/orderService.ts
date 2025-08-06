@@ -57,3 +57,11 @@ export const createPayment = async (paymentData: PaymentData) => {
   const response = await apiClient.post("/payments/payments/create/", paymentData);
   return response.data;
 };
+
+/**
+ * Fetch payment methods
+ */
+export const fetchPaymentMethods = async () => {
+  const response = await apiClient.get(`/payments/payment-options/`);
+  return response.data;
+};

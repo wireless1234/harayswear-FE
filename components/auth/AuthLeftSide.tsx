@@ -4,11 +4,11 @@ import React from 'react'
 
 const AuthLeftSide = () => {
   return (
-    <section className='w-full md:w-5/12 bg-[url(/images/loginvector.png)] bg-cover bg-center'>
+    <section className='w-full md:w-5/12 bg-cover bg-center'>
         <div className='flex flex-col items-center justify-center h-full p-4 md:p-0'>
           <Link href='/'>
             <Image
-                src='/images/unclevlogo.png'
+                src='/images/vaperoo_with_pantone_colours-02.png'
                 alt='logo'
                 width={100}
                 height={100}

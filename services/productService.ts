@@ -8,12 +8,13 @@ export const addProduct = async (productData: ProductCreateUpdate): Promise<Prod
 };
 
 // Get all products
-export const getAllProducts = async (category?: number, brand?: number): Promise<Product[]> => {
+export const getAllProducts = async (category?: number, brand?: number, page?: number, page_size?: number): Promise<Product[]> => {
   const params: { category?: number; brand?: number; page?: number; page_size?: number } = {};
   if (category) params.category = category;
   if (brand) params.brand = brand;
-  params.page=1;
-  params.page_size=100;
+  if (page) params.page = page;
+  if (page_size) params.page_size = page_size;
+  else params.page_size = 1000; // Default page size if not provided
   const { data } = await apiClient.get("/products/products", { params });
   return data.data.results;
 };

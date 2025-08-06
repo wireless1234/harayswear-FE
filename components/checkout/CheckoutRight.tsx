@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useCart } from "@/hooks/useCart";
+import { useServiceCharge } from "@/hooks/useServiceCharge";
 import { CartItem } from "@/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateCartItem, removeCartItem } from "@/services/cartService";
@@ -11,6 +12,7 @@ import Cookies from "js-cookie";
 
 const CheckoutRight = () => {
   const { cart } = useCart();
+  const { serviceChargeAmount, isLoading: serviceChargeLoading } = useServiceCharge();
   const queryClient = useQueryClient();
   const sessionKey = Cookies.get("session_key");
 
@@ -23,8 +25,9 @@ const CheckoutRight = () => {
     0
   );
 
+  const serviceCharge = serviceChargeAmount;
   const tax = 0;
-  const grandTotal = total + tax;
+  const grandTotal = total + serviceCharge + tax;
 
   const updateQuantityMutation = useMutation({
     mutationFn: ({ product_id, quantity, cartItemId }: { product_id: number; quantity: number; cartItemId: number }) =>
@@ -100,16 +103,32 @@ const CheckoutRight = () => {
       {/* Total Section */}
       <section className="mt-8 w-10/12 mx-auto">
         <div className="flex justify-between text-xl font-semibold">
-          <span>Total</span>
+          <span>Subtotal</span>
           <span>${total.toFixed(2)}</span>
+        </div>
+        <div className="flex justify-between text-xl font-semibold">
+          <span>Service Charge</span>
+          <span>
+            {serviceChargeLoading ? (
+              <span className="text-gray-400">Loading...</span>
+            ) : (
+              `$${serviceCharge.toFixed(2)}`
+            )}
+          </span>
         </div>
         {/* <div className="flex justify-between text-xl font-semibold">
           <span>Merchant Fee</span>
           <span>${tax.toFixed(2)}</span>
         </div> */}
-        <div className="flex justify-between text-xl font-semibold">
+        <div className="flex justify-between text-xl font-semibold border-t pt-2">
           <span>Grand Total</span>
-          <span>${grandTotal.toFixed(2)}</span>
+          <span>
+            {serviceChargeLoading ? (
+              <span className="text-gray-400">Loading...</span>
+            ) : (
+              `$${grandTotal.toFixed(2)}`
+            )}
+          </span>
         </div>
       </section>
     </div>

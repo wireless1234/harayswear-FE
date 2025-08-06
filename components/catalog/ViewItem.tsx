@@ -89,7 +89,7 @@ const ViewItem = () => {
         </div>
 
         {/* Description */}
-        <p className="text-gray-700 mb-4">No description available.</p>
+        <p className="text-gray-700 mb-4">{product.long_description || "No description available."}</p>
 
         {/* Share */}
         <button className="text-sm text-gray-600 flex items-center gap-2 hover:underline">

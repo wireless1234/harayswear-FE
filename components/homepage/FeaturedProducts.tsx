@@ -6,14 +6,14 @@ import React from "react"
 import { getAllProducts } from "@/services/productService"
 import { useQuery } from "@tanstack/react-query"
 
-const Catalog = () => {
+const FeaturedProducts = () => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ["products"],
-    queryFn: () => getAllProducts(),
+    queryKey: ["products", "featured"],
+    queryFn: () => getAllProducts(undefined, undefined, 1, 8),
   })
   return (
     <section className="px-6 py-12 max-w-7xl mx-auto">
-      <h1 className="text-4xl font-bold mb-2">Products</h1>
+      <h1 className="text-4xl font-bold mb-2">Featured Products</h1>
 
       {/* Filter and Sort Controls */}
       <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
@@ -75,8 +75,17 @@ const Catalog = () => {
           </Link>
         ))}
       </div>
+      
+      {/* View All Button */}
+      <div className="text-center mt-8">
+        <Link href="/catalog">
+          <button className="bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition-colors font-medium">
+            View All
+          </button>
+        </Link>
+      </div>
     </section>
   )
 }
 
-export default Catalog
+export default FeaturedProducts

@@ -96,7 +96,7 @@ export default function LoginForm() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-1/2 block mx-auto bg-[var(--color-purple)] text-white font-semibold p-3 rounded-3xl hover:bg-purple-500 transition duration-200 cursor-pointer"
+                className="w-1/2 block mx-auto border border-black font-semibold p-3 rounded-3xl hover:bg-gray-200 transition duration-200 cursor-pointer"
               >
                 {isSubmitting ? "Logging in..." : "Login"}
               </button>

@@ -15,6 +15,10 @@ export interface Product {
   id: number;
   name: string;
   short_description: string;
+  long_description?: string;
+  features?: string;
+  specification?: string;
+  usage_instruction?: string;
   price: number;
   discounted_price: number;
   stock: number;
