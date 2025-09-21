@@ -10,7 +10,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useServiceCharge } from '@/hooks/useServiceCharge';
 import { usePaymentMethods } from '@/hooks/usePayment';
 import { toast } from 'react-toastify';
-import AddressAutocomplete from '@/components/ui/AddressAutocomplete';
+
 
 interface CheckoutFormValues {
   email: string;
@@ -94,6 +94,9 @@ const CheckoutForm: React.FC = () => {
         window.location.href = `https://hayraywears.com/payment-processing?redirectlink=${encodedUrl}`;
       } else if (data.data.payment_method === "paypal") {
         window.location.href = `https://javcorp.com.au/payment-processing?redirectlink=${data.data.payment_url}`;
+      } else  if (data.data.payment_method === "stripe2") {
+        const encodedUrl = encodeURIComponent(data.data.payment_url);
+        window.location.href = `https://mascomelect.com/payment-processing?redirectlink=${encodedUrl}`;
       } else {
         window.location.href = data.data.payment_url; // Redirect to payment URL
       }
@@ -341,42 +344,7 @@ const CheckoutForm: React.FC = () => {
           {/* Shipping Address */}
           <div className="mb-3">
             <label>Address</label>
-            <Field name="shippingAddress">
-              {({ field, form }: FieldProps) => (
-                <AddressAutocomplete
-                  value={field.value}
-                  onChange={(value: string) => form.setFieldValue('shippingAddress', value)}
-                  onPlaceChanged={(place: google.maps.places.PlaceResult) => {
-                    // Auto-fill other address fields if available
-                    const addressComponents = place.address_components;
-                    if (addressComponents) {
-                      let city = '';
-                      let state = '';
-                      let zip = '';
-                      
-                      addressComponents.forEach((component) => {
-                        const types = component.types;
-                        if (types.includes('locality')) {
-                          city = component.long_name;
-                        } else if (types.includes('administrative_area_level_1')) {
-                          state = component.long_name;
-                        } else if (types.includes('postal_code')) {
-                          zip = component.long_name;
-                        }
-                      });
-                      
-                      // Auto-fill the form fields
-                      if (city) form.setFieldValue('city', city);
-                      if (state) form.setFieldValue('state', state);
-                      if (zip) form.setFieldValue('zip', zip);
-                    }
-                  }}
-                  placeholder="Start typing your address..."
-                  className="w-full border p-2 rounded-lg"
-                  name="shippingAddress"
-                />
-              )}
-            </Field>
+            <Field type="text" name="shippingAddress" className="w-full border p-2 rounded-lg" />
             <ErrorMessage name="shippingAddress" component="div" className="text-red-500 text-sm" />
           </div>
 
@@ -409,17 +377,7 @@ const CheckoutForm: React.FC = () => {
           {!useShippingAddress && (
             <div className="mb-3">
               <label>Billing Address</label>
-              <Field name="billingAddress">
-                {({ field, form }: FieldProps) => (
-                  <AddressAutocomplete
-                    value={field.value}
-                    onChange={(value: string) => form.setFieldValue('billingAddress', value)}
-                    placeholder="Start typing your billing address..."
-                    className="w-full border p-2 rounded-lg"
-                    name="billingAddress"
-                  />
-                )}
-              </Field>
+              <Field type="text" name="billingAddress" className="w-full border p-2 rounded-lg" />
               <ErrorMessage name="billingAddress" component="div" className="text-red-500 text-sm" />
             </div>
           )}
