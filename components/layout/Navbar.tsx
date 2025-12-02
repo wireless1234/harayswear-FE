@@ -1,13 +1,13 @@
 "use client";
 
-import Image from 'next/image';
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { ShoppingCart, Menu, X, User, Search } from 'lucide-react';
-import LoginLogoutButton from '../ui/LoginLogoutButton';
+import Image from "next/image";
+import React, { useState } from "react";
+import Link from "next/link";
+import { ShoppingCart, Menu, X, User, Search } from "lucide-react";
+import LoginLogoutButton from "../ui/LoginLogoutButton";
 import { usePathname } from "next/navigation";
-import { useCart } from '@/hooks/useCart';
-import { CartItem } from '@/types';
+import { useCart } from "@/hooks/useCart";
+import { CartItem } from "@/types";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,9 +15,16 @@ const Navbar = () => {
   const { cart } = useCart();
 
   const cartArray = Array.isArray(cart) ? cart : [];
-  const totalItems = cartArray?.reduce((acc, brand) => {
-    return acc + brand.items.reduce((sum: number, item: CartItem) => sum + item.quantity, 0);
-  }, 0) || 0;
+  const totalItems =
+    cartArray?.reduce((acc, brand) => {
+      return (
+        acc +
+        brand.items.reduce(
+          (sum: number, item: CartItem) => sum + item.quantity,
+          0
+        )
+      );
+    }, 0) || 0;
 
   return (
     <section className="relative w-full bg-white border-b border-gray-200">
@@ -28,11 +35,10 @@ const Navbar = () => {
 
       {/* Main Navbar */}
       <div className="w-full flex justify-between items-center px-4 py-4 max-w-7xl mx-auto">
-
         <div className="flex items-center gap-4">
           <Link href="/" className="block">
             <Image
-              src="/images/logo.webp"
+              src="/images/logo1.webp"
               alt="Logo"
               width={100}
               height={100}
@@ -41,7 +47,8 @@ const Navbar = () => {
           </Link>
           <nav className="hidden lg:flex gap-6 text-gray-700 font-medium">
             {["Home", "Catalog", "About"].map((name) => {
-              const path = name.toLowerCase() === "home" ? "/" : `/${name.toLowerCase()}`;
+              const path =
+                name.toLowerCase() === "home" ? "/" : `/${name.toLowerCase()}`;
               return (
                 <Link
                   key={path}
@@ -56,7 +63,6 @@ const Navbar = () => {
             })}
           </nav>
         </div>
-
 
         {/* Right: Icons */}
         <div className="flex items-center gap-4">
@@ -99,7 +105,8 @@ const Navbar = () => {
         <div className="lg:hidden fixed top-24 left-0 w-full bg-white shadow-md rounded-b-lg z-40 py-4">
           <nav className="flex flex-col items-center gap-4">
             {["Home", "Catalog", "About"].map((name) => {
-              const path = name.toLowerCase() === "home" ? "/" : `/${name.toLowerCase()}`;
+              const path =
+                name.toLowerCase() === "home" ? "/" : `/${name.toLowerCase()}`;
               return (
                 <Link
                   key={path}
@@ -120,4 +127,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
