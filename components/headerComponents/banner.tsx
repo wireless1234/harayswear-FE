@@ -7,9 +7,31 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const images = [
-  { src: "/images/abaya1.webp", alt: "Abaya", text: "Elegant and stylish abayas for every occasion." },
-  { src: "/images/abaya2.webp", alt: "Under Abaya", text: "Discover the perfect blend of tradition and modernity." },
-  { src: "/images/abaya3.webp", alt: "Jalabiya", text: "Comfortable and chic designs for your wardrobe." },
+  {
+    src: "/images/abaya1.webp",
+    alt: "Abaya",
+    text: "Elegant and stylish abayas for every occasion.",
+  },
+  {
+    src: "/images/abaya2.webp",
+    alt: "Under Abaya",
+    text: "Discover the perfect blend of tradition and modernity.",
+  },
+  {
+    src: "/images/abaya3.webp",
+    alt: "Jalabiya",
+    text: "Comfortable and chic designs for your wardrobe.",
+  },
+  {
+    src: "/images/cosmetics.webp",
+    alt: "Cosmetics",
+    text: "Premium beauty and skincare products to enhance your natural glow.",
+  },
+  {
+    src: "/images/fashion.webp",
+    alt: "Fashion Brands",
+    text: "Explore top fashion brands offering timeless style and modern trends.",
+  },
 ];
 
 const PremiumVapingBanner = () => {
@@ -29,7 +51,10 @@ const PremiumVapingBanner = () => {
       <div className="w-full h-full">
         <Slider {...settings}>
           {images.map((image, index) => (
-            <div key={index} className="relative w-full h-[70vh] overflow-hidden">
+            <div
+              key={index}
+              className="relative w-full h-[70vh] overflow-hidden"
+            >
               <div className="absolute inset-0 z-0">
                 <Image
                   src={image.src}
