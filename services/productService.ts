@@ -1,5 +1,5 @@
 import apiClient from "@/lib/apiClient";
-import { Product, ProductCreateUpdate, Brand } from "@/types/product";
+import { Product, ProductCreateUpdate, Brand, PaginatedResponse } from "@/types/product";
 
 // Add a new product
 export const addProduct = async (productData: ProductCreateUpdate): Promise<Product> => {
@@ -8,7 +8,12 @@ export const addProduct = async (productData: ProductCreateUpdate): Promise<Prod
 };
 
 // Get all products
-export const getAllProducts = async (category?: number, brand?: number, page?: number, page_size?: number): Promise<Product[]> => {
+export const getAllProducts = async (
+  category?: number,
+  brand?: number,
+  page?: number,
+  page_size?: number
+): Promise<PaginatedResponse<Product>> => {
   const params: { category?: number; brand?: number; page?: number; page_size?: number } = {};
   if (category) params.category = category;
   if (brand) params.brand = brand;
@@ -16,7 +21,8 @@ export const getAllProducts = async (category?: number, brand?: number, page?: n
   if (page_size) params.page_size = page_size;
   else params.page_size = 1000; // Default page size if not provided
   const { data } = await apiClient.get("/products/products", { params });
-  return data.data.results;
+  // The API returns a wrapper under data.data with count, next, previous, results
+  return data.data as PaginatedResponse<Product>;
 };
 
 // Get product by ID

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage, FieldProps } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Cookies from "js-cookie";
@@ -34,7 +34,7 @@ const CheckoutForm: React.FC = () => {
   const [isPaymentProcessing, setIsPaymentProcessing] = useState<boolean>(false);
   const { user } = useAuth();
   const { serviceChargeAmount } = useServiceCharge();
-  const isLoggedIn = !!user; // Check if user is logged in
+  const isLoggedIn = !!user;
 
   const queryClient = useQueryClient();
 
@@ -62,9 +62,9 @@ const CheckoutForm: React.FC = () => {
         amount: amount,
         currency_code: "USD",
         order_id: data.data.id,
-        success_url: `https://vaperoo.com.au/checkout/order-success?status=success&orderId=${data.data.id}`,
-        cancel_url: `https://vaperoo.com.au/checkout/order-success?status=canceled&orderId=${data.data.id}`,
-        failure_url: `https://vaperoo.com.au/checkout/order-success?status=failed&orderId=${data.data.id}`,
+        success_url: `https://hayrayswear.com/checkout/order-success?status=success&orderId=${data.data.id}`,
+        cancel_url: `https://hayrayswear.com/checkout/order-success?status=canceled&orderId=${data.data.id}`,
+        failure_url: `https://hayrayswear.com/checkout/order-success?status=failed&orderId=${data.data.id}`,
       };
 
       createPaymentMutation(paymentData);
@@ -111,7 +111,7 @@ const CheckoutForm: React.FC = () => {
   const initialValues: CheckoutFormValues = {
     email: '',
     phone: '',
-    country: 'Australia',
+    country: '',
     firstName: '',
     lastName: '',
     city: '',
@@ -196,16 +196,6 @@ const CheckoutForm: React.FC = () => {
     mutate(isGuest ? { orderData, session_key } : { orderData });
   };
 
-  const ALLOWED_STATES = [
-    "Victoria",
-    "New South Wales",
-    "Queensland",
-    "South Australia",
-    "Western Australia",
-    "Tasmania",
-    "Northern Territory",
-    "Australian Capital Territory",
-  ];
   return (
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
       {() => (
@@ -230,31 +220,6 @@ const CheckoutForm: React.FC = () => {
 
           {/* Delivery Address */}
           <h2 className="text-xl font-semibold mt-6 mb-4">Delivery</h2>
-          
-          {/* Same Day Delivery Areas */}
-          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-            <h3 className="text-lg font-semibold text-yellow-800 mb-3">Same Day Delivery Areas</h3>
-            <div className="text-sm text-yellow-700 space-y-2">
-              <div>
-                <strong>VIC:</strong> Melbourne CBD and surrounding suburbs within 15km • Bundoora and 15km radius • Bentleigh and 15km radius • Mentone and 15km radius
-              </div>
-              <div>
-                <strong>NSW:</strong> Yagoona and 15km radius • Hunters Hill and 15km radius • Riverstone and 15km radius • Yamba • Ballina • Cabarita • Kingscliff • Tweed Heads and 10km radius
-              </div>
-              <div>
-                <strong>QLD:</strong> Gold Coast and surrounding areas • Rockhampton • Emerald • Blackwater • Yeppoon • Gracemere • Bowen • Proserpine • Airlie Beach
-              </div>
-              <div>
-                <strong>SA:</strong> Port Lincoln
-              </div>
-              <div>
-                <strong>NT:</strong> Darwin
-              </div>
-              <div>
-                <strong>WA:</strong> Perth CBD • Fremantle • Falcon • Warnbro • Armadale • Baldivis • Secret Harbour • Rockingham • Medina • Cockburn • Mandurah and 15km radius • Bunbury • Manjimup • Collie • Pinjarra
-              </div>
-            </div>
-          </div>
 
           <div className="grid grid-cols-2 gap-4 mb-3">
             {!isLoggedIn && (
@@ -274,27 +239,17 @@ const CheckoutForm: React.FC = () => {
           </div>
           <div className="mb-3">
             <label>Country/Region *</label>
-            <Field as="select" name="country" className="w-full border p-2 rounded-lg">
-              <option value="Australia">Australia</option>
-              {/* <option value="USA">USA</option>
-              <option value="UK">UK</option> */}
-            </Field>
+            <Field type="text" name="country" className="w-full border p-2 rounded-lg" />
           </div>
           <div className="grid grid-cols-3 gap-4">
             <div>
               <label>State</label>
                 <Field
-                  as="select"
+                  type="text"
                   name="state"
                   className="w-full p-3 rounded-md border border-[#DBDDE3] text-black focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
-                >
-                  <option value="" disabled>Select your state</option>
-                  {ALLOWED_STATES.map((state) => (
-                    <option key={state} value={state}>
-                      {state}
-                    </option>
-                  ))}
-                </Field>
+                  placeholder="Enter your State"
+                  />
               <ErrorMessage name="state" component="div" className="text-red-500 text-sm" />
             </div>
             <div>

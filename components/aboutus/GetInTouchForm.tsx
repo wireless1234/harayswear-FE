@@ -50,7 +50,7 @@ const GetInTouchForm = () => {
                     rows={6}
                     ></textarea>
                 </div>
-                <button type="submit" className="bg-[var(--color-purple)] text-white p-3 w-full md:w-1/3 block mx-auto rounded-3xl mt-4">
+                <button type="submit" className="bg-black text-white p-3 w-full md:w-1/3 block mx-auto rounded-3xl mt-4">
                 Send
                 </button>
             </form>

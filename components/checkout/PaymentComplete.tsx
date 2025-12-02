@@ -24,8 +24,6 @@ const PaymentComplete = () => {
                         height={200}
                     />
                     <p className="text-black mt-2 text-lg font-semibold">Thank you for your Purchase</p>
-                    {/* <p className="text-white mt-2 text-md font-semibold">Please make your payment at the counter to collect your Items</p> */}
-                    
                 </>;
     };
 

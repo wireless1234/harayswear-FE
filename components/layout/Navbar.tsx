@@ -23,7 +23,7 @@ const Navbar = () => {
     <section className="relative w-full bg-white border-b border-gray-200">
       {/* Top Banner */}
       <div className="w-full text-center text-sm py-2 text-gray-800 border-b border-gray-200">
-        Australia&apos;s #1 trusted online Alibarbar Vape Store
+        #1 trusted online Clothing Store
       </div>
 
       {/* Main Navbar */}
@@ -32,7 +32,7 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           <Link href="/" className="block">
             <Image
-              src="/images/logo.jpeg"
+              src="/images/logo.webp"
               alt="Logo"
               width={100}
               height={100}
@@ -40,8 +40,8 @@ const Navbar = () => {
             />
           </Link>
           <nav className="hidden lg:flex gap-6 text-gray-700 font-medium">
-            {["Home", "Alibarbar", "Contact"].map((name) => {
-              const path = name.toLowerCase() === "home" ? "/" : name.toLowerCase() === "alibarbar" ? "/catalog" : `/${name.toLowerCase()}`;
+            {["Home", "Catalog", "About"].map((name) => {
+              const path = name.toLowerCase() === "home" ? "/" : `/${name.toLowerCase()}`;
               return (
                 <Link
                   key={path}
@@ -60,6 +60,16 @@ const Navbar = () => {
 
         {/* Right: Icons */}
         <div className="flex items-center gap-4">
+          {/* Mobile Cart (visible on small screens) */}
+          <Link href="/checkout" className="relative lg:hidden">
+            <ShoppingCart size={20} />
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5">
+                {totalItems}
+              </span>
+            )}
+          </Link>
+
           {/* Mobile Menu Toggle */}
           <button
             className="lg:hidden"
@@ -88,8 +98,8 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="lg:hidden fixed top-24 left-0 w-full bg-white shadow-md rounded-b-lg z-40 py-4">
           <nav className="flex flex-col items-center gap-4">
-            {["Home", "Alibarbar", "Contact"].map((name) => {
-              const path = name.toLowerCase() === "home" ? "/" : name.toLowerCase() === "alibarbar" ? "/catalog" : `/${name.toLowerCase()}`;
+            {["Home", "Catalog", "About"].map((name) => {
+              const path = name.toLowerCase() === "home" ? "/" : `/${name.toLowerCase()}`;
               return (
                 <Link
                   key={path}

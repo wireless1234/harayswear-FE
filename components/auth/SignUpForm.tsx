@@ -28,17 +28,6 @@ const SignUpForm = () => {
     }) => signup(values),
   });
 
-  const ALLOWED_STATES = [
-    "Victoria",
-    "New South Wales",
-    "Queensland",
-    "South Australia",
-    "Western Australia",
-    "Tasmania",
-    "Northern Territory",
-    "Australian Capital Territory",
-  ];
-
   return (
     <div className="flex items-center justify-center md:min-h-screen w-full md:w-7/12 px-4 sm:px-6 lg:px-8">
       <div className="w-full md:w-2/3 mx-auto text-black">
@@ -184,17 +173,11 @@ const SignUpForm = () => {
               <div>
                 <label className="text-black block mb-1">State *</label>
                 <Field
-                  as="select"
+                  type="text"
                   name="state"
                   className="w-full p-3 rounded-md border border-[#DBDDE3] text-black focus:ring-2 focus:ring-[var(--color-purple)] outline-none"
-                >
-                  <option value="" disabled>Select your state</option>
-                  {ALLOWED_STATES.map((state) => (
-                    <option key={state} value={state}>
-                      {state}
-                    </option>
-                  ))}
-                </Field>
+                  placeholder="Enter your State"
+                />
                 <ErrorMessage name="state" component="div" className="text-red-400 text-sm mt-1" />
               </div>
 
@@ -237,7 +220,7 @@ const SignUpForm = () => {
               {/* Accept Terms */}
               <div className="flex items-center">
                 <Field type="checkbox" name="acceptTerms" className="mr-2" />
-                <label className="text-black">I hereby accept the terms and conditions of Vaperoo</label>
+                <label className="text-black">I hereby accept the terms and conditions of Hayrayswear</label>
                 <ErrorMessage name="acceptTerms" component="div" className="text-red-400 text-sm ml-2" />
               </div>
 

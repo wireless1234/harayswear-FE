@@ -8,7 +8,7 @@ const AuthLeftSide = () => {
         <div className='flex flex-col items-center justify-center h-full p-4 md:p-0'>
           <Link href='/'>
             <Image
-                src='/images/vaperoo_with_pantone_colours-02.png'
+                src='/images/logo.webp'
                 alt='logo'
                 width={100}
                 height={100}

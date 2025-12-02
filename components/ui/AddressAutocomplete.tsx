@@ -48,7 +48,7 @@ const AddressAutocomplete: React.FC<AddressAutocompleteProps> = ({
             inputRef.current,
             {
               types: ['address'],
-              componentRestrictions: { country: 'AU' }, // Restrict to Australia
+              componentRestrictions: { country: 'AU' },
               fields: [
                 'address_components',
                 'formatted_address',

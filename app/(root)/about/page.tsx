@@ -1,31 +1,28 @@
 import Image from 'next/image'
 import React from 'react'
-import GetInTouchForm from '@/components/aboutus/GetInTouchForm'
-import { MdDeliveryDining } from "react-icons/md";
-import { BiDish } from "react-icons/bi";
-import { GiThreeLeaves } from "react-icons/gi";
-import { FiHeart } from "react-icons/fi";
+import GetInTouchForm from '@/components/aboutus/GetInTouchForm';
 
 const page = () => {
-  const ourValues = [
-    { src: <MdDeliveryDining className='size-20 mx-auto'/>, title: "Fast Delivery", text: "Get your meals hot and fresh in under 2 hours." },
-    { src: <BiDish className='size-20 mx-auto'/>, title: "Restaurant Quality", text: "Every bite tastes and feels like you are dining out." },
-    { src: <GiThreeLeaves className='size-20 mx-auto'/>, title: "Fresh Ingredients", text: "We cook with premium meat and garden fresh produce." },
-    { src: <FiHeart className='size-20 mx-auto'/>, title: "Customer First", text: "Friendly service and satisfaction guaranteed." },
-  ]
+   const ourValues = [
+    { title: "We specialize in:", text: [{head: "Abayas", body: "classic, embellished, and modern cuts"}, {head: "Jallabiyas", body: "luxurious and everyday styles"},{head: "Bridal & Occasion Wear", body: "elegant modestwear for celebrations"}] },
+    { title: "We prioritize:", text: [{head: "Quality", body: "we use premium quality materials"}, {head: "Etihics", body: "Ethical sourcing and craftsmanship"},{head: "Variety", body: "Versatility for daily wear and special events"}] },
+    { title: "Our values:", text: [{head: "Elegance", body: "We design garments that embody grace and timeless beauty"}, {head: "Honesty", body: "Transparent practices and quality you can trust"},{head: "Excellence", body: "Premium craftsmanship in every detail"}] },
+    ]
   return (
     <div>
       {/* Header Section */}
-      <section className='bg-[url("/images/burger.png")] bg-cover bg-center flex flex-col md:flex-row items-center h-[50vh]'>
-        <div className='px-4 mx-auto max-w-[1440px]  md:px-10'>
-          <h1 style={{ fontFamily: 'Neutro, sans-serif'}}  className='text-4xl max-w-3xl text-black font-bold'>Crafted With Passion, Delivered With Care</h1>
-          <p className='text-black font-medium text-lg mt-4 max-w-3xl'>
-            
-            Savour the flavors of expertlly made gourmet meals fom the comfort of your home.
+      <section className='bg-[url("/images/headervector.png")] bg-cover bg-center flex flex-col md:flex-row items-center justify-center pt-[10rem] md:pt-[5rem]'>
+        <div className='px-4 md:px-0'>
+          <h1 style={{ fontFamily: 'Neutro, sans-serif'}}  className='text-3xl text-white font-bold'>Elegant. Modest. Timeless.</h1>
+          <p className='text-white text-lg mt-4 max-w-2xl'>
+            Welcome to Hayrays Wears, your go-to destination for premium Abayas and Jallabiyas — where modesty meets modern elegance.
+            We are proudly dedicated to bringing the finest Arabic women&apos;s clothing to your doorstep. With deep roots in Middle Eastern culture and a global outlook, Hayrays Wears is on a mission to redefine modest fashion for today&apos;s confident and style-conscious woman.
           </p>
         </div>
        
-        
+        <div className='mt-8'>
+          <Image src='/images/aboutus.png' alt='about us' width={500} height={500} className='rounded-full' />
+        </div>
       </section>
 
       {/* Why Choose Us Section */}
@@ -38,59 +35,51 @@ const page = () => {
               WHO WE ARE
           </h2>
           <p>
-          At Javcorp, we believe food should be more than just sustenance — it should be an experience. 
-          Born from a deep love for bold flavours, generous portions, and the kind of meals that stick with you, 
-          Javcorp is all about comfort food made with heart. From our kitchen to your table, 
-          every dish we serve is a celebration of great taste, honest ingredients, and good old-fashioned hospitality.
+            Hayrays Wears is an online modest fashion brand focused on offering authentic, high-quality Arabic clothing to women around the world.
             
           </p>
           <p className='mt-2'> 
-          Proudly Australian, our story started with a simple vision: to bring people together over food that warms the soul and satisfies every craving. 
-          Whether you&apos;re in the mood for a smoky rack of ribs slow-cooked to perfection, a thick and juicy burger loaded with all the trimmings, 
-          a wood-fired gourmet pizza, a tender steak grilled just the way you like it, or a vibrant, freshly tossed salad — our menu has something for everyone.
+            We serve a community of women who value style, tradition, and comfort, delivering curated collections that reflect both cultural pride and modern sophistication.
           </p>
           <p className='mt-2'> 
-          At Javcorp, we don&apos;t cut corners. We prepare every dish with care, using high-quality ingredients sourced from trusted local suppliers. 
-          Our chefs are passionate about flavour and dedicated to consistency, ensuring that each bite hits the mark — every single time.
+            We aim to 3 a global modest fashion leader, connecting tradition with innovation.
+            We&apos;re focused on offering stylish Arabic clothing that reflects authenticity, grace, and strength — building a fashion hub that women trust.
           </p>
-          <p className='mt-2'> 
-          And we know that comfort shouldn&apos;t stop at the table — that&apos;s why we deliver. Whether you&apos;re chilling at home, 
-          hosting friends, or just don&apos;t feel like cooking, we bring the Javcorp experience right to your door. 
-          Fast, fresh, and always delicious.
-          </p>
-          <p className='mt-2'> 
-          So go on — tuck into something truly satisfying. At Javcorp, we&apos;re not just feeding your appetite. We&apos;re serving up memories, one hearty meal at a time.
-          </p>
+
+          
         </div>
         <Image
-          src="/images/pork-ribs.png"
+          src="/images/pink.webp"
           alt="food"
-          width={500}
-          height={500}
+          width={400}
+          height={400}
           layout='responsive'
           className='w-full h-auto max-w-[800px] rounded-2xl mt-8 xl:mt-0 md:ml-8 '
         />
        
       </section>
 
+
+      {/* Why Choose Us Section */}
       <section id='our-promise' className='py-12 max-w-[1440px] mx-auto'>
-        <h2 style={{ fontFamily: 'Neutro, sans-serif'}}  className='text-4xl text-black text-center font-bold'>OUR PROMISE</h2>
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  mt-8 gap-4'>
+        <h2 style={{ fontFamily: 'Neutro, sans-serif'}}  className='text-4xl text-black text-center font-bold'>Why Choose Us</h2>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8 gap-4'>
           {ourValues.map((value, index) => (
             <div key={index} className="flex flex-col mx-4 bg-[#FFFFFF0D] rounded-xl shadow-lg p-6 h-full min-h-[15rem] justify-between">
-            {value.src}
-            <h4 className="text-black text-center text-lg mt-2  font-semibold">{value.title}</h4>
-            <p className="text-black text-center opacity-70  ">{value.text}</p>
+            <h4 className="text-black text-center text-2xl mt-2  font-semibold">{value.title}</h4>
+            {value.text.map((text, index) => (
+              <div key={index} className="space-y-2">
+                <h4 className={`text-black text-center text-lg mt-2  font-semibold `}>{text.head} -
+                  
+                </h4>
+                <p className={`text-black text-center opacity-70  ${text.body}`}> {text.body}</p>
+              </div>
+            ))}
+            
           </div>
           ))}
         </div>
       </section>
-
-      <div className='bg-black text-white text-3xl px-6 flex items-center justify-center py-10 my-5'>
-        <h3
-        style={{ fontFamily: 'Neutro, sans-serif'}}
-        >Hungry Yet?</h3>
-      </div>
 
       {/* Get In Touch Section */}
       <section className='py-12'>

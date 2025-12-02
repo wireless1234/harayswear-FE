@@ -1,5 +1,5 @@
 {
-  "name": "food-ecommerce-fe",
+  "name": "harayswear",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -28,6 +28,7 @@
     "react-icons": "^5.5.0",
     "react-infinite-scroll-component": "^6.1.0",
     "react-loading-skeleton": "^3.5.0",
+    "react-slick": "^0.31.0",
     "react-toastify": "^11.0.5",
     "tailwind-merge": "^3.0.2",
     "tw-animate-css": "^1.2.4",
@@ -42,8 +43,10 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-slick": "^0.23.13",
     "eslint": "^9",
     "eslint-config-next": "15.2.3",
+    "slick-carousel": "^1.8.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

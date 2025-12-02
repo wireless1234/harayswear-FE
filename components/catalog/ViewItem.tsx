@@ -54,7 +54,7 @@ const ViewItem = () => {
       <div>
         <p className="text-sm text-gray-500 uppercase tracking-wider mb-2">{product.brand?.name || "My Store"}</p>
         <h1 className="text-4xl font-semibold mb-4">{product.name}</h1>
-        <p className="text-xl mb-1">${product.price} AUD</p>
+        <p className="text-xl mb-1">${product.price} USD</p>
         <p className="text-sm text-gray-600 mb-6">
           <a href="#" className="underline">Shipping</a> calculated at checkout.
         </p>

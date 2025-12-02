@@ -3,8 +3,8 @@ import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 
 export const metadata: Metadata = {
-  title: "Vaperoo",
-  description: "Vaperoo",
+  title: "Hayrayswear",
+  description: "Hayrayswear",
 };
 
 export default function RootLayout({

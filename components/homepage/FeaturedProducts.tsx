@@ -5,9 +5,10 @@ import Image from "next/image"
 import React from "react"
 import { getAllProducts } from "@/services/productService"
 import { useQuery } from "@tanstack/react-query"
+import { Product, PaginatedResponse } from "@/types/product"
 
 const FeaturedProducts = () => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<PaginatedResponse<Product>>({
     queryKey: ["products", "featured"],
     queryFn: () => getAllProducts(undefined, undefined, 1, 8),
   })
@@ -35,13 +36,13 @@ const FeaturedProducts = () => {
           <select className="border rounded px-2 py-1">
             <option>Best selling</option>
           </select>
-          <span>12 products</span>
+          <span>{data ? `${data.count} products` : isLoading ? 'Loading...' : '0 products'}</span>
         </div>
       </div>
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        { data && data.length === 0 && (
+        { data && data.results && data.results.length === 0 && (
           <div className="col-span-4 text-center text-gray-500">
             No products found in this category.
           </div>
@@ -56,7 +57,7 @@ const FeaturedProducts = () => {
             Error loading products: {error.message}
           </div>
         )}
-        {data && data.map((item, index) => (
+        {data && data.results && data.results.slice().reverse().map((item, index) => (
           <Link href={`/view-item?productId=${item.id}`} key={index}>
             <div key={index} className="group">
               <div className="relative w-full aspect-[4/5] overflow-hidden rounded-lg shadow-sm bg-gray-50">
@@ -70,7 +71,7 @@ const FeaturedProducts = () => {
                 />
               </div>
               <h3 className="mt-3 font-medium text-lg">{item.name}</h3>
-              <p className="text-gray-700">${item.price} AUD</p>
+              <p className="text-gray-700">${item.price} USD</p>
             </div>
           </Link>
         ))}

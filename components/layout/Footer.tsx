@@ -15,18 +15,18 @@ const Footer = () => {
       </div>
 
       <div className="space-x-3">
-        <Link href="/policies/privacy-policy">Privacy policy</Link>
+        <Link href="#">Privacy policy</Link>
         <span>·</span>
-        <Link href="/policies/refund-policy">Refund policy</Link>
+        <Link href="#">Refund policy</Link>
         <span>·</span>
-        <Link href="/policies/terms-of-service">Terms of service</Link>
+        <Link href="#">Terms of service</Link>
         <span>·</span>
-        <Link href="/policies/shipping-policy">Shipping policy</Link>
+        <Link href="#">Shipping policy</Link>
         <span>·</span>
-        <Link href="/policies/contact-information">Contact information</Link>
+        <Link href="#">Contact information</Link>
       </div>
 
-      <div className="mt-4 text-xs">© 2025, Vaperoo</div>
+      <div className="mt-4 text-xs">© 2025, Hayrayswear</div>
     </footer>
   );
 };

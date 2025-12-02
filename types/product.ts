@@ -68,3 +68,11 @@ export interface ProductCreateUpdate {
   brand: number; // ID reference
   images: string[];
 }
+
+// Generic paginated response wrapper used by list endpoints
+export interface PaginatedResponse<T> {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
+}

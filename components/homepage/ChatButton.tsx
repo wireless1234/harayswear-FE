@@ -28,8 +28,8 @@ const ChatButton = () => {
           alt="whatsapp" 
           width={200} 
           height={100} 
-          className="rounded-full shadow-lg cursor-pointer" 
-          onClick={() => window.open('https://wa.me/85293742537', '_blank')}
+          className="rounded-full shadow-lg cursor-pointer"
+          onClick={() => window.open('https://wa.me/61450787224', '_blank')}
         />
       </div>
     </div>
