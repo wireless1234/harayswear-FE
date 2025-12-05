@@ -28,9 +28,9 @@ const images = [
     text: "Premium beauty and skincare products to enhance your natural glow.",
   },
   {
-    src: "/images/fashion.webp",
-    alt: "Fashion Brands",
-    text: "Explore top fashion brands offering timeless style and modern trends.",
+    src: "/images/men.webp",
+    alt: "Men's Wear",
+    text: "Explore top men's fashion   offering timeless style and modern trends.",
   },
 ];
 
